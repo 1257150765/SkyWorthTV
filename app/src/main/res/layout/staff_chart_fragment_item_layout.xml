@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/y42">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:layout_weight="1"
+            android:id="@+id/tv_nRow_staffChartFragment_item"
+            android:text="序号"
+            style="@style/TextViewStyle2" />
+        <TextView
+            android:layout_weight="2"
+            android:id="@+id/tv_wkm_wkno_staffChartFragment_item"
+            android:text="员工工号"
+            style="@style/TextViewStyle2" />
+        <TextView
+            android:layout_weight="2"
+            android:id="@+id/tv_wkm_name_staffChartFragment_item"
+            android:text="员工姓名"
+            style="@style/TextViewStyle2" />
+        <TextView
+            android:layout_weight="2"
+            android:id="@+id/tv_wkm_rzrq_staffChartFragment_item"
+            android:text="入职日期"
+            style="@style/TextViewStyle2" />
+        <TextView
+            android:layout_weight="3"
+            android:id="@+id/tv_lbm_lbmc_staffChartFragment_item"
+            android:text="岗位"
+            style="@style/TextViewStyle2" />
+        <ImageView
+            android:layout_weight="1"
+            android:id="@+id/iv_jnl_jn01_staffChartFragment_item"
+            android:text="烧录"
+            style="@style/TextViewStyle2" />
+        <ImageView
+            android:layout_weight="1"
+            android:id="@+id/iv_jnl_jn02_staffChartFragment_item"
+            android:text="印刷"
+            style="@style/TextViewStyle2" />
+        <ImageView
+            android:layout_weight="1"
+            android:id="@+id/iv_jnl_jn03_staffChartFragment_item"
+            android:text="点胶"
+            style="@style/TextViewStyle2" />
+        <ImageView
+            android:layout_weight="1"
+            android:id="@+id/iv_jnl_jn04_staffChartFragment_item"
+            android:text="贴片"
+            style="@style/TextViewStyle2" />
+
+        <ImageView
+            android:layout_weight="1"
+            android:id="@+id/iv_jnl_jn05_staffChartFragment_item"
+            android:text="回流焊"
+            style="@style/TextViewStyle2" />
+        <ImageView
+            android:layout_weight="1"
+            android:id="@+id/iv_jnl_jn06_staffChartFragment_item"
+            android:text="AOI"
+            style="@style/TextViewStyle2" />
+        <ImageView
+            android:layout_weight="1"
+            android:id="@+id/iv_jnl_jn07_staffChartFragment_item"
+            android:text="自动插件"
+            style="@style/TextViewStyle2" />
+        <ImageView
+            android:layout_weight="1"
+            android:id="@+id/iv_jnl_jn08_staffChartFragment_item"
+            android:text="预加工"
+            style="@style/TextViewStyle2" />
+        <ImageView
+            android:layout_weight="1"
+            android:id="@+id/iv_jnl_jn9_staffChartFragment_item"
+            android:text="波峰焊"
+            style="@style/TextViewStyle2" />
+        <ImageView
+            android:layout_weight="1"
+            android:id="@+id/iv_jnl_jn10_staffChartFragment_item"
+            android:text="手工焊接"
+            style="@style/TextViewStyle2" />
+        <ImageView
+            android:layout_weight="1"
+            android:id="@+id/iv_jnl_jn11_staffChartFragment_item"
+            android:text="外观检查"
+            style="@style/TextViewStyle2" />
+        <ImageView
+            android:layout_weight="1"
+            android:id="@+id/iv_jnl_jn12_staffChartFragment_item"
+            android:text="刷胶"
+            style="@style/TextViewStyle2" />
+        <ImageView
+            android:layout_weight="1"
+            android:id="@+id/iv_jnl_jn13_staffChartFragment_item"
+            android:text="打胶"
+            style="@style/TextViewStyle2" />
+        <ImageView
+            android:layout_weight="1"
+            android:id="@+id/iv_jnl_jn14_staffChartFragment_item"
+            android:text="接插线"
+            style="@style/TextViewStyle2" />
+        <ImageView
+            android:layout_weight="1"
+            android:id="@+id/iv_jnl_jn15_staffChartFragment_item"
+            android:text="编程"
+            style="@style/TextViewStyle2" />
+        <ImageView
+            android:layout_weight="1"
+            android:id="@+id/iv_jnl_jn16_staffChartFragment_item"
+            android:text="物料员"
+            style="@style/TextViewStyle2" />
+        <ImageView
+            android:layout_weight="1"
+            android:id="@+id/iv_jnl_jn17_staffChartFragment_item"
+            android:text="维修"
+            style="@style/TextViewStyle2" />
+        <ImageView
+            android:layout_weight="1"
+            android:id="@+id/iv_jnl_jn18_staffChartFragment_item"
+            android:text="仓管"
+            style="@style/TextViewStyle2" />
+        <ImageView
+            android:layout_weight="1"
+            android:id="@+id/iv_jnl_jn19_staffChartFragment_item"
+            android:text="管理"
+            style="@style/TextViewStyle2" />
+        <ImageView
+            android:layout_weight="1"
+            android:id="@+id/iv_jnl_jn20_staffChartFragment_item"
+            android:text="沟通能力"
+            style="@style/TextViewStyle2" />
+        <ImageView
+            android:layout_weight="1"
+            android:id="@+id/iv_jnl_jn21_staffChartFragment_item"
+            android:text="培训"
+            style="@style/TextViewStyle2" />
+        <ImageView
+            android:layout_weight="1"
+            android:id="@+id/iv_jnl_jn22_staffChartFragment_item"
+            android:text="office办公"
+            style="@style/TextViewStyle2" />
+        <TextView
+            android:layout_weight="2"
+            android:id="@+id/iv_jnl_jn23_staffChartFragment_item"
+            android:text="非关键岗位"
+            style="@style/TextViewStyle2" />
+    </LinearLayout>
+</LinearLayout>

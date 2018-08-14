@@ -1,0 +1,91 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ruiduoyi.skyworthtv.view.fragment.BLMXFragment">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@mipmap/background" />
+    <LinearLayout
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textStyle="bold"
+            android:textColor="@color/yellow2"
+            android:layout_marginTop="@dimen/y15"
+            android:textSize="@dimen/y60"
+            android:text="8月10日车间不良明细"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_marginLeft="@dimen/y120"
+        android:layout_marginTop="@dimen/x135"
+        android:layout_marginRight="@dimen/y120"
+        android:layout_marginBottom="@dimen/x75"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="3"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y53">
+                <TextView
+                    android:background="@color/text_staff_chart_fragment"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent" />
+                <TextView
+                    android:text="班组"
+                    android:layout_weight="1"
+                    style="@style/ControlTitleTextViewStyle" />
+                <TextView
+                    android:text="生产订单"
+                    android:layout_weight="3"
+                    style="@style/ControlTitleTextViewStyle" />
+                <TextView
+                    android:text="物料编号"
+                    android:layout_weight="4"
+                    style="@style/ControlTitleTextViewStyle" />
+                <TextView
+                    android:text="产品名称"
+                    android:layout_weight="4"
+                    style="@style/ControlTitleTextViewStyle" />
+                <TextView
+                    android:text="条码号"
+                    android:layout_weight="4"
+                    style="@style/ControlTitleTextViewStyle" />
+                <TextView
+                    android:text="缺陷描述"
+                    android:layout_weight="5"
+                    style="@style/ControlTitleTextViewStyle" />
+                <TextView
+                    android:text="故障类型"
+                    android:layout_weight="2"
+                    style="@style/ControlTitleTextViewStyle" />
+
+                <TextView
+                    android:text="检出单位"
+                    android:layout_weight="2"
+                    style="@style/ControlTitleTextViewStyle" />
+            </LinearLayout>
+            <android.support.v7.widget.RecyclerView
+                android:paddingLeft="1dp"
+                android:background="@drawable/bord_left"
+                android:id="@+id/rv_recycler_blmxFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </android.support.v7.widget.RecyclerView>
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

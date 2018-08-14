@@ -1,0 +1,276 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context="com.ruiduoyi.skyworthtv.view.fragment.StaffChartFragment">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y90"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/header" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y75"
+        android:orientation="horizontal">
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_centerInParent="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/leval0" />
+                <TextView
+                    android:textSize="@dimen/y22"
+                    android:layout_marginLeft="@dimen/y15"
+                    android:text="无法执行"
+                    android:textAlignment="textStart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_centerInParent="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/level1" />
+                <TextView
+                    android:textSize="@dimen/y22"
+                    android:layout_marginLeft="@dimen/y15"
+                    android:text="了解工作要素，获得上岗操作资格"
+                    android:textAlignment="textStart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_centerInParent="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/level2" />
+                <TextView
+                    android:textSize="@dimen/y22"
+                    android:layout_marginLeft="@dimen/y15"
+                    android:text="独立上岗操作并能反馈、处理异常,上岗6个月以上"
+                    android:textAlignment="textStart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_centerInParent="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/level3" />
+                <TextView
+                    android:textSize="@dimen/y22"
+                    android:layout_marginLeft="@dimen/y15"
+                    android:text="可独立完成工作并分析处理异常,上岗一年以上"
+                    android:textAlignment="textStart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_centerInParent="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/level4" />
+                <TextView
+                    android:textSize="@dimen/y22"
+                    android:layout_marginLeft="@dimen/y15"
+                    android:text="独立完成工作并指导培训他人完成"
+                    android:textAlignment="textStart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y75">
+        <TextView
+            android:layout_weight="1"
+            android:text="序号"
+            style="@style/TextViewStyle" />
+        <TextView
+            android:layout_weight="2"
+            android:text="员工工号"
+            style="@style/TextViewStyle" />
+        <TextView
+            android:layout_weight="2"
+            android:text="员工姓名"
+            style="@style/TextViewStyle" />
+        <TextView
+            android:layout_weight="2"
+            android:text="入职日期"
+            style="@style/TextViewStyle" />
+        <TextView
+            android:layout_weight="3"
+            android:text="岗位"
+            style="@style/TextViewStyle" />
+        <TextView
+            android:layout_weight="1"
+            android:text="烧录"
+            style="@style/TextViewStyle" />
+        <TextView
+            android:layout_weight="1"
+            android:text="印刷"
+            style="@style/TextViewStyle" />
+        <TextView
+            android:layout_weight="1"
+            android:text="点胶"
+            style="@style/TextViewStyle" />
+        <TextView
+            android:layout_weight="1"
+            android:text="贴片"
+            style="@style/TextViewStyle" />
+
+        <TextView
+            android:layout_weight="1"
+            android:text="回流焊"
+            style="@style/TextViewStyle" />
+        <TextView
+            android:layout_weight="1"
+            android:text="AOI"
+            style="@style/TextViewStyle" />
+        <TextView
+            android:layout_weight="1"
+            android:text="自动插件"
+            style="@style/TextViewStyle" />
+        <TextView
+            android:layout_weight="1"
+            android:text="预加工"
+            style="@style/TextViewStyle" />
+        <TextView
+            android:layout_weight="1"
+            android:text="波峰焊"
+            style="@style/TextViewStyle" />
+        <TextView
+            android:layout_weight="1"
+            android:text="手工焊接"
+            style="@style/TextViewStyle" />
+        <TextView
+            android:layout_weight="1"
+            android:text="外观检查"
+            style="@style/TextViewStyle" />
+        <TextView
+            android:layout_weight="1"
+            android:text="刷胶"
+            style="@style/TextViewStyle" />
+        <TextView
+            android:layout_weight="1"
+            android:text="打胶"
+            style="@style/TextViewStyle" />
+        <TextView
+            android:layout_weight="1"
+            android:text="接插线"
+            style="@style/TextViewStyle" />
+        <TextView
+            android:layout_weight="1"
+            android:text="编程"
+            style="@style/TextViewStyle" />
+        <TextView
+            android:layout_weight="1"
+            android:text="物料员"
+            style="@style/TextViewStyle" />
+        <TextView
+            android:layout_weight="1"
+            android:text="维修"
+            style="@style/TextViewStyle" />
+        <TextView
+            android:layout_weight="1"
+            android:text="仓管"
+            style="@style/TextViewStyle" />
+        <TextView
+            android:layout_weight="1"
+            android:text="管理"
+            style="@style/TextViewStyle" />
+        <TextView
+            android:layout_weight="1"
+            android:text="沟通能力"
+            style="@style/TextViewStyle" />
+        <TextView
+            android:layout_weight="1"
+            android:text="培训"
+            style="@style/TextViewStyle" />
+        <TextView
+            android:layout_weight="1"
+            android:text="office办公"
+            style="@style/TextViewStyle" />
+        <TextView
+            android:layout_weight="2"
+            android:text="非关键岗位"
+            style="@style/TextViewStyle" />
+    </LinearLayout>
+    <android.support.v7.widget.RecyclerView
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:id="@+id/rv_recycler_staffChartFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
+</LinearLayout>

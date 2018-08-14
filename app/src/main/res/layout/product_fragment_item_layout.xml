@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="28dp">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/tv_bz_productFragment"
+            android:text="班组"
+            android:layout_weight="1"
+            style="@style/ControlTextViewStyle" />
+        <TextView
+            android:id="@+id/tv_scddh_productFragment"
+            android:text="生产订单号"
+            android:layout_weight="3"
+            style="@style/ControlTextViewStyle" />
+        <TextView
+            android:id="@+id/tv_wlbh_productFragment"
+            android:text="物料编号"
+            android:layout_weight="4"
+            style="@style/ControlTextViewStyle" />
+        <TextView
+            android:id="@+id/tv_cpmc_productFragment"
+            android:text="产品名称"
+            android:layout_weight="4"
+            style="@style/ControlTextViewStyle" />
+        <TextView
+            android:id="@+id/tv_dds_productFragment"
+            android:text="订单数"
+            android:layout_weight="2"
+            style="@style/ControlTextViewStyle" />
+        <TextView
+            android:id="@+id/tv_sjwcsl_productFragment"
+            android:text="实际完成数量"
+            android:layout_weight="2"
+            style="@style/ControlTextViewStyle" />
+        <TextView
+            android:id="@+id/tv_blps_productFragment"
+            android:text="不良品数"
+            android:layout_weight="2"
+            style="@style/ControlTextViewStyle" />
+        <TextView
+            android:id="@+id/tv_bll_productFragment"
+            android:text="不良率"
+            android:layout_weight="2"
+            style="@style/ControlTextViewStyle" />
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

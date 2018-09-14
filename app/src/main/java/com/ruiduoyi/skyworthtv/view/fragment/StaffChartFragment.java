@@ -13,6 +13,7 @@ import com.ruiduoyi.skyworthtv.contact.StaffChartFragmentContact;
 import com.ruiduoyi.skyworthtv.model.bean.BaseBean;
 import com.ruiduoyi.skyworthtv.model.bean.StaffInfo;
 import com.ruiduoyi.skyworthtv.presentor.StaffChartFragmentPresentor;
+import com.ruiduoyi.skyworthtv.view.activity.BaseFragment;
 import com.ruiduoyi.skyworthtv.view.adapter.StaffChartFragmentAdapter;
 
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ import butterknife.Unbinder;
 /**
  * 员工评价表
  */
-public class StaffChartFragment extends Fragment implements StaffChartFragmentContact.View {
+public class StaffChartFragment extends BaseFragment implements StaffChartFragmentContact.View {
     private static final long TIME = 10000L;
     View mRootView;
     @BindView(R.id.rv_recycler_staffChartFragment)
@@ -36,19 +37,22 @@ public class StaffChartFragment extends Fragment implements StaffChartFragmentCo
     Unbinder unbinder;
     private StaffChartFragmentPresentor presentor;
     private StaffChartFragmentAdapter adapter;
-    ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(2);
     private int page = 1;
     public StaffChartFragment() {
         // Required empty public constructor
     }
-
-
-    public static StaffChartFragment newInstance() {
+    public static BaseFragment newInstance(String devId,String funcId,String changeTime, String reflushTime) {
         StaffChartFragment fragment = new StaffChartFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
+        Bundle bundle = new Bundle();
+        bundle.putString(BaseFragment.DEV_ID,devId);
+        bundle.putString(BaseFragment.FUNC_ID,funcId);
+        bundle.putString(BaseFragment.CHANGETIME,changeTime);
+        bundle.putString(BaseFragment.REFLUSHTIME,reflushTime);
+        fragment.setArguments(bundle);
         return fragment;
     }
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,13 +68,20 @@ public class StaffChartFragment extends Fragment implements StaffChartFragmentCo
         init();
         presentor = new StaffChartFragmentPresentor(getContext(),this);
         //presentor.getWorkList(""+page);
-        executor.scheduleAtFixedRate(new Runnable() {
+        /*executor.scheduleAtFixedRate(new Runnable() {
             @Override
             public void run() {
-                presentor.getWorkList(""+page);
+
             }
-        },0,TIME, TimeUnit.MILLISECONDS);
+        },0,TIME, TimeUnit.MILLISECONDS);*/
+
         return mRootView;
+    }
+
+    @Override
+    protected void load() {
+        super.load();
+        presentor.getWorkList(""+page);
     }
 
     private void init() {

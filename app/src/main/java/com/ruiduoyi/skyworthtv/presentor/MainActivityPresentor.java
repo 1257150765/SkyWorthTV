@@ -1,19 +1,15 @@
 package com.ruiduoyi.skyworthtv.presentor;
 
 import android.content.Context;
-import android.content.DialogInterface;
-import android.os.Environment;
 import android.util.Log;
 
+import com.ruiduoyi.skyworthtv.model.bean.MainActivityBean;
 import com.ruiduoyi.skyworthtv.contact.MainActivityContact;
+import com.ruiduoyi.skyworthtv.model.net.RetrofitManager;
 import com.ruiduoyi.skyworthtv.util.DownloadUtils;
-
-import java.io.File;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
-
-import static android.os.Environment.DIRECTORY_MUSIC;
 
 /**
  * Created by Chen on 2018-08-10.
@@ -26,6 +22,7 @@ public class MainActivityPresentor implements MainActivityContact.Presentor {
     public MainActivityPresentor(Context mContext, MainActivityContact.View view) {
         this.mContext = mContext;
         this.view = view;
+        loadData();
         //checkUpdate();
     }
 
@@ -72,6 +69,31 @@ public class MainActivityPresentor implements MainActivityContact.Presentor {
                         downloadUtils.changePermission(s+"/App.apk");
                     }
                 });
+    }
+
+    @Override
+    public void loadData() {
+        RetrofitManager.getAllBoardData().safeSubscribe(new Observer<MainActivityBean>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(MainActivityBean value) {
+                view.onLoadDataSucceed(value);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
 
     }
 }

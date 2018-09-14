@@ -3,11 +3,16 @@ package com.ruiduoyi.skyworthtv.model.net;
 
 import android.util.Log;
 
+import com.ruiduoyi.skyworthtv.model.bean.MainActivityBean;
+import com.ruiduoyi.skyworthtv.model.bean.BLMXFragmentBean;
 import com.ruiduoyi.skyworthtv.model.bean.BaseBean;
+import com.ruiduoyi.skyworthtv.model.bean.LineFragmentBean;
+import com.ruiduoyi.skyworthtv.model.bean.PDFFragmentBean;
 import com.ruiduoyi.skyworthtv.model.bean.StaffInfo;
 import com.ruiduoyi.skyworthtv.util.Config;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -70,6 +75,8 @@ public class RetrofitManager {
             }
         };
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .readTimeout(5, TimeUnit.SECONDS)
+                .connectTimeout(10,TimeUnit.SECONDS)
                 .addInterceptor(logInterceptor)
                 .build();
         retrofit = new Retrofit.Builder()
@@ -87,11 +94,102 @@ public class RetrofitManager {
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
 
     }
+    /*public static Observable<BaseBean<ManagerBean>> getManager(String key_xbdm){
+        return retrofit.create(Api.class)
+                .getManager(Config.PRGID,Config.KEY_SERID,Config.TYPE_FUNC_NAME_LINE_MANAGER,key_xbdm)
+                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+    }
+    public static Observable<BaseBean<PlanListBean>> getPlanList(String key_xbdm){
+        return retrofit.create(Api.class)
+                .getPlanList(Config.PRGID,Config.KEY_SERID,Config.TYPE_FUNC_NAME_PLAN_LIST,key_xbdm)
+                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+    }
+    public static Observable<BaseBean<LineFinishRateBean>> getLineFinishRate(String key_xbdm){
+        return retrofit.create(Api.class)
+                .getLineFinishRate(Config.PRGID,Config.KEY_SERID,Config.TYPE_FUNC_NAME_LINE_FINISH_RATE,key_xbdm)
+                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+    }
+    public static Observable<BaseBean<CurrPlanBean>> getCurrPlan(String key_xbdm){
+        return retrofit.create(Api.class)
+                .getCurrPlan(Config.PRGID,Config.KEY_SERID,Config.TYPE_FUNC_NAME_LINE_CURR_PLAN,key_xbdm)
+                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+    }
+    public static Observable<BaseBean<LineSDQtyBean>> getLineSDQty(String key_xbdm){
+        return retrofit.create(Api.class)
+                .getLineSDQty(Config.PRGID,Config.KEY_SERID,Config.TYPE_FUNC_NAME_LINE_SDQTY,key_xbdm)
+                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+    }
+    public static Observable<BaseBean<Last7DayCompleteBean>> getLast7DayComplete(String key_xbdm){
+        return retrofit.create(Api.class)
+                .getLast7DayComplete(Config.PRGID,Config.KEY_SERID,Config.TYPE_FUNC_NAME_LINE_LAST7DAY_COMPLETE,key_xbdm)
+                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+    }
+    public static Observable<BaseBean<LineErrorCountBean>> getLineErrorCount(String key_xbdm){
+        return retrofit.create(Api.class)
+                .getLineErrorCount(Config.PRGID,Config.KEY_SERID,Config.TYPE_FUNC_NAME_LINE_ERROR_COUNT,key_xbdm)
+                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+    }*/
+    public static Observable<LineFragmentBean> getLineData(String key_DevId,String funcId){
+        return retrofit.create(Api.class)
+                .getLineData(Config.PRGID,Config.KEY_SERID,key_DevId,funcId)
+                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public static Observable<PDFFragmentBean> getPdfData(String key_DevId,String funcId){
+        return retrofit.create(Api.class)
+                .getPdfData(Config.PRGID_PDF,Config.KEY_SERID,key_DevId,funcId)
+                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+    }
+    public static Observable<BLMXFragmentBean> getBlmxData(String key_DevId, String funcId){
+        return retrofit.create(Api.class)
+                .getBlmxData(Config.PRGID_BLMX,Config.KEY_SERID,key_DevId,funcId)
+                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public static Observable<MainActivityBean> getAllBoardData(){
+        return retrofit.create(Api.class)
+                .getAllBoardData(Config.PRGID,Config.KEY_SERID,Config.TYPE_FUNC_NAME_ALL)
+                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+    }
 
 
 
     interface Api{
         @GET("SmtPDADataDeal")
         Observable<BaseBean<StaffInfo>> getWorkListgin(@Query("key_prgid") String key_prgid, @Query("key_srvid") String key_srvid, @Query("key_page") String key_page);
+
+        /*@GET("SmtPDADataDeal")
+        Observable<BaseBean<ManagerBean>> getManager(@Query("key_prgid") String key_prgid,@Query("key_srvid") String key_srvid, @Query("key_FuncName") String key_FuncName, @Query("key_xbdm") String key_xbdm);
+
+        @GET("SmtPDADataDeal")
+        Observable<BaseBean<PlanListBean>> getPlanList(@Query("key_prgid") String key_prgid,@Query("key_srvid") String key_srvid, @Query("key_FuncName") String key_FuncName, @Query("key_xbdm") String key_xbdm);
+
+        @GET("SmtPDADataDeal")
+        Observable<BaseBean<LineFinishRateBean>> getLineFinishRate(@Query("key_prgid") String key_prgid, @Query("key_srvid") String key_srvid, @Query("key_FuncName") String key_FuncName, @Query("key_xbdm") String key_xbdm);
+
+        @GET("SmtPDADataDeal")
+        Observable<BaseBean<CurrPlanBean>> getCurrPlan(@Query("key_prgid") String key_prgid, @Query("key_srvid") String key_srvid, @Query("key_FuncName") String key_FuncName, @Query("key_xbdm") String key_xbdm);
+
+        @GET("SmtPDADataDeal")
+        Observable<BaseBean<LineSDQtyBean>> getLineSDQty(@Query("key_prgid") String key_prgid, @Query("key_srvid") String key_srvid, @Query("key_FuncName") String key_FuncName, @Query("key_xbdm") String key_xbdm);
+
+        @GET("SmtPDADataDeal")
+        Observable<BaseBean<Last7DayCompleteBean>> getLast7DayComplete(@Query("key_prgid") String key_prgid, @Query("key_srvid") String key_srvid, @Query("key_FuncName") String key_FuncName, @Query("key_xbdm") String key_xbdm);
+
+        @GET("SmtPDADataDeal")
+        Observable<BaseBean<LineErrorCountBean>> getLineErrorCount(@Query("key_prgid") String key_prgid, @Query("key_srvid") String key_srvid, @Query("key_FuncName") String key_FuncName, @Query("key_xbdm") String key_xbdm);
+        */
+        @GET("SmtPDADataDeal")
+        Observable<LineFragmentBean> getLineData(@Query("key_prgid") String key_prgid, @Query("key_srvid") String key_srvid, @Query("Key_DevId") String Key_DevId, @Query("key_FuncId")String key_FuncId);
+
+        @GET("SmtPDADataDeal")
+        Observable<PDFFragmentBean> getPdfData(@Query("key_prgid") String key_prgid, @Query("key_srvid") String key_srvid, @Query("Key_DevId") String Key_DevId, @Query("key_FuncId")String key_FuncId);
+
+        @GET("SmtPDADataDeal")
+        Observable<BLMXFragmentBean> getBlmxData(@Query("key_prgid") String key_prgid, @Query("key_srvid") String key_srvid, @Query("Key_DevId") String Key_DevId, @Query("key_FuncId")String key_FuncId);
+
+        @GET("SmtPDADataDeal")
+        Observable<MainActivityBean> getAllBoardData(@Query("key_prgid") String key_prgid, @Query("key_srvid") String key_srvid, @Query("key_FuncId") String key_FuncId);
+
     }
 }

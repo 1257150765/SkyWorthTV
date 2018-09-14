@@ -16,9 +16,8 @@ import butterknife.ButterKnife;
 /**
  *车间看板（员工评价表）
  */
+@Deprecated
 public class WorkShopStateBoardActivity extends AppCompatActivity {
-
-
     @BindView(R.id.ll_fragmentContainer_stateBoardBoard)
     LinearLayout llFragmentContainer;
     @Override
@@ -26,13 +25,13 @@ public class WorkShopStateBoardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_work_shop_state_board);
         ButterKnife.bind(this);
-        replceFragment(StaffChartFragment.newInstance());
+
     }
 
     private void replceFragment(Fragment target){
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.ll_fragmentContainer_stateBoardBoard, target)
+                .add(R.id.ll_fragmentContainer_stateBoardBoard, target)
                 .commit();
     }
 }

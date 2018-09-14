@@ -1,0 +1,117 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ruiduoyi.skyworthtv.view.fragment.KPIFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@mipmap/background" />
+    <LinearLayout
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_title_blmxFragment"
+            android:textStyle="bold"
+            android:textColor="@color/yellow2"
+            android:layout_marginTop="@dimen/y15"
+            android:textSize="@dimen/y60"
+            android:text="前7天KPI看板"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginLeft="@dimen/y120"
+        android:layout_marginTop="@dimen/x135"
+        android:layout_marginRight="@dimen/y120"
+        android:layout_marginBottom="@dimen/x75"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_margin="@dimen/y10"
+                android:background="@drawable/line_fragment_default_bord_background"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+                <TextView
+                    style="@style/LineFragmentTextViewStyle2"
+                    android:text="计划达成率" />
+                <com.github.mikephil.charting.charts.BarChart
+                    android:id="@+id/bc_leftTop_kpiFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </com.github.mikephil.charting.charts.BarChart>
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_margin="@dimen/y10"
+                android:background="@drawable/line_fragment_default_bord_background"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+                <TextView
+                    style="@style/LineFragmentTextViewStyle2"
+                    android:text="不良件数" />
+                <com.github.mikephil.charting.charts.BarChart
+                    android:id="@+id/bc_rightTop_kpiFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </com.github.mikephil.charting.charts.BarChart>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_margin="@dimen/y10"
+                android:background="@drawable/line_fragment_default_bord_background"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+                <TextView
+                    style="@style/LineFragmentTextViewStyle2"
+                    android:text="生产效率" />
+                <com.github.mikephil.charting.charts.HorizontalBarChart
+                    android:id="@+id/hbc_leftBottom_kpiFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </com.github.mikephil.charting.charts.HorizontalBarChart>
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_margin="@dimen/y10"
+                android:background="@drawable/line_fragment_default_bord_background"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+                <TextView
+                    style="@style/LineFragmentTextViewStyle2"
+                    android:text="人均生产效率" />
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/lc_rightBottom_kpiFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </com.github.mikephil.charting.charts.LineChart>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

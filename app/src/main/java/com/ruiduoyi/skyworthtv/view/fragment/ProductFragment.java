@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.AxisBase;
-import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -24,12 +23,11 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IValueFormatter;
-import com.github.mikephil.charting.formatter.LargeValueFormatter;
-import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.ruiduoyi.skyworthtv.R;
 import com.ruiduoyi.skyworthtv.model.bean.ProductFragmentBarChartBean;
 import com.ruiduoyi.skyworthtv.model.bean.ProductFragmentBean;
+import com.ruiduoyi.skyworthtv.view.activity.BaseFragment;
 import com.ruiduoyi.skyworthtv.view.adapter.ProductFragmentAdapter;
 
 import java.text.DecimalFormat;
@@ -42,11 +40,9 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link ProductFragment#newInstance} factory method to
- * create an instance of this fragment.
+ *控制器生产看板
  */
-public class ProductFragment extends Fragment {
+public class ProductFragment extends BaseFragment {
     private static final String TAG = ProductFragment.class.getSimpleName();
     View mRootView;
     @BindView(R.id.rv_recycler_productFragment)
@@ -66,14 +62,21 @@ public class ProductFragment extends Fragment {
     TextView tvDct;
     @BindView(R.id.tv_zhj_productFragment)
     TextView tvZhj;
+    @BindView(R.id.tv_title_productFragment)
+    TextView tvTitle;
 
     public ProductFragment() {
         // Required empty public constructor
     }
 
-    // TODO: Rename and change types and number of parameters
-    public static ProductFragment newInstance() {
+    public static BaseFragment newInstance(String devId,String funcId,String changeTime, String reflushTime) {
         ProductFragment fragment = new ProductFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(BaseFragment.DEV_ID,devId);
+        bundle.putString(BaseFragment.FUNC_ID,funcId);
+        bundle.putString(BaseFragment.CHANGETIME,changeTime);
+        bundle.putString(BaseFragment.REFLUSHTIME,reflushTime);
+        fragment.setArguments(bundle);
         return fragment;
     }
 
@@ -95,12 +98,10 @@ public class ProductFragment extends Fragment {
     }
 
     private void initBarChart() {
-        //bcBarChart.setPinchZoom(true);//设置按比例放缩柱状图
-
-        /*axisLeft.setTextColor(Color.WHITE);*/
-        bcBarChart.setDrawGridBackground(false);
-        bcBarChart.getAxisRight().setEnabled(false);
-        bcBarChart.getDescription().setEnabled(false);
+        //
+        bcBarChart.setDrawGridBackground(false);//取消网格线
+        bcBarChart.getAxisRight().setEnabled(false);//取消右边Y轴
+        bcBarChart.getDescription().setEnabled(false);//取消描述
         final List<ProductFragmentBarChartBean> data = new ArrayList<>();
 
         for (int i=1; i<=5; i++){
@@ -112,6 +113,7 @@ public class ProductFragment extends Fragment {
             bean.setDcl(new Random().nextFloat()*100);
             data.add(bean);
         }
+        //Y轴(左边)
         YAxis axisLeft = bcBarChart.getAxisLeft();
         //axisLeft.setEnabled(false);
         axisLeft.setDrawGridLines(false);
@@ -120,24 +122,29 @@ public class ProductFragment extends Fragment {
         axisLeft.setAxisMaximum(0);
         axisLeft.setStartAtZero(true);
         axisLeft.setAxisMaximum(500);
+        //图例
         Legend l = bcBarChart.getLegend();
         l.setTextSize(16);
         l.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
         l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
         l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
-        l.setXOffset(20);
+        l.setXEntrySpace(80);
+        l.setFormSize(15);
+        l.setTextSize(15);
         l.setDrawInside(false);
         l.setTextColor(Color.WHITE);
-        ArrayList<BarEntry> yVals1 = new ArrayList<BarEntry>();
-        ArrayList<BarEntry> yVals2 = new ArrayList<BarEntry>();
-        ArrayList<BarEntry> yVals3 = new ArrayList<BarEntry>();
-        for (int i = 0; i < 5; i++) {
+        //数据（3种数据）
+        ArrayList<BarEntry> yVals1 = new ArrayList<>();
+        ArrayList<BarEntry> yVals2 = new ArrayList<>();
+        ArrayList<BarEntry> yVals3 = new ArrayList<>();
+        for (int i = 0; i < data.size(); i++) {
             yVals1.add(new BarEntry(i,data.get(i).getRjscxl()));
             yVals2.add(new BarEntry(i,data.get(i).getScxl()));
             yVals3.add(new BarEntry(i, data.get(i).getDcl()));
         }
 
         BarDataSet set1, set2, set3;
+        //如果未设置过数据
         if (bcBarChart.getData() != null && bcBarChart.getData().getDataSetCount() > 0) {
             set1 = (BarDataSet) bcBarChart.getData().getDataSetByIndex(0);
             set2 = (BarDataSet) bcBarChart.getData().getDataSetByIndex(1);
@@ -157,7 +164,7 @@ public class ProductFragment extends Fragment {
             set3.setColor(Color.rgb(242, 247, 158));
             BarData barData = new BarData(set1, set2, set3);
             final DecimalFormat decimalFormat=new DecimalFormat(".0");//构造方法的字符格式这里如果小数不足2位,会以0补足.
-
+            //设置Y轴的值的格式，（第三条数据要显示百分比）
             barData.setValueFormatter(new IValueFormatter() {
                 @Override
                 public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
@@ -174,15 +181,17 @@ public class ProductFragment extends Fragment {
             });
             barData.setValueTextColor(Color.WHITE);
             barData.setDrawValues(true);
-
             //data2.setValueTypeface(mTfLight);
             bcBarChart.setData(barData);
         }
+        //组间距，柱子间距，柱子宽度，
         float groupSpace = 0.34f;
         float barSpace = 0.02f; // x3 DataSet
         float barWidth = 0.2f; // x3 DataSet
         // specify the width each bar should have
         bcBarChart.getBarData().setBarWidth(barWidth);
+
+        //X轴
         XAxis xAxis = bcBarChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setTextColor(Color.WHITE);
@@ -195,7 +204,7 @@ public class ProductFragment extends Fragment {
             public String getFormattedValue(float value, AxisBase axis) {
                 int index = (int) value;
                 Log.d(TAG, "getFormattedValue: "+value);
-                if (value < 0 || value >= 5){
+                if (value < 0 || value >= data.size()){
                     return "";
                 }
                 return data.get(index).getXb();
@@ -203,17 +212,18 @@ public class ProductFragment extends Fragment {
         });
         // restrict the x-axis range
         xAxis.setAxisMinimum(0);
-        xAxis.setAxisMaximum(5);
+        xAxis.setAxisMaximum(data.size());
         xAxis.setLabelCount(data.size()+1,true);
 
         // barData.getGroupWith(...) is a helper that calculates the width each group needs based on the provided parameters
         //bcBarChart.getXAxis().setAxisMaximum(startYear + bcBarChart.getBarData().getGroupWidth(groupSpace, barSpace) * groupCount);
         bcBarChart.groupBars(0, groupSpace, barSpace);
-
         bcBarChart.invalidate();
     }
 
+
     private void init() {
+        tvTitle.setText("控制器车间生产看板");
         List<ProductFragmentBean> data = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             ProductFragmentBean bean = new ProductFragmentBean();

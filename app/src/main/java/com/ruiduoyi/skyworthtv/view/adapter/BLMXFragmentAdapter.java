@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.ruiduoyi.skyworthtv.R;
 import com.ruiduoyi.skyworthtv.model.bean.BLMXBean;
+import com.ruiduoyi.skyworthtv.model.bean.BLMXFragmentBean;
 
 import java.util.List;
 
@@ -24,9 +25,9 @@ public class BLMXFragmentAdapter extends RecyclerView.Adapter<BLMXFragmentAdapte
 
 
     private Context mContext;
-    private List<BLMXBean> mData;
+    private List<BLMXFragmentBean.UcDataBean.TableBean> mData;
 
-    public BLMXFragmentAdapter(Context mContext, List<BLMXBean> mData) {
+    public BLMXFragmentAdapter(Context mContext, List<BLMXFragmentBean.UcDataBean.TableBean> mData) {
         this.mContext = mContext;
         this.mData = mData;
     }
@@ -41,15 +42,15 @@ public class BLMXFragmentAdapter extends RecyclerView.Adapter<BLMXFragmentAdapte
 
     @Override
     public void onBindViewHolder(BLMXFragmentHolder holder, int position) {
-        BLMXBean bean = mData.get(position);
-        holder.tvBz.setText(bean.getA1());
-        holder.tvScddh.setText(bean.getA2());
-        holder.tvWlbh.setText(bean.getA3());
-        holder.tvCpmc.setText(bean.getA4());
-        holder.tvTmh.setText(bean.getA5());
-        holder.tvQxms.setText(bean.getA6());
-        holder.tvGzlb.setText(bean.getA7());
-        holder.tvJcdw.setText(bean.getA8());
+        BLMXFragmentBean.UcDataBean.TableBean bean = mData.get(position);
+        holder.tvBz.setText(bean.getErr_xbdm());
+        holder.tvScddh.setText(bean.getErr_plm_djbh());
+        holder.tvWlbh.setText(bean.getPlm_wldm());
+        holder.tvCpmc.setText(bean.getItm_pmgg());
+        holder.tvTmh.setText(bean.getErr_bltm());
+        holder.tvQxms.setText(bean.getErr_gzyyms());
+        holder.tvGzlb.setText(bean.getErr_gzdlms());
+        holder.tvJcdw.setText(bean.getOpr_gzmc());
     }
 
 

@@ -2,7 +2,6 @@ package com.ruiduoyi.skyworthtv.view.adapter;
 
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
@@ -15,12 +14,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ruiduoyi.skyworthtv.R;
+import com.ruiduoyi.skyworthtv.model.bean.MainActivityBean;
 import com.ruiduoyi.skyworthtv.util.DensityUtil;
 import com.ruiduoyi.skyworthtv.view.activity.ControlWorkShopStateBoardActivity;
 import com.ruiduoyi.skyworthtv.view.activity.TestActivity;
 import com.ruiduoyi.skyworthtv.view.activity.WorkShopStateBoardActivity;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,14 +35,33 @@ import butterknife.ButterKnife;
 public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapter.MainActivityHolder> {
 
     private static final String TAG = MainActivityHolder.class.getSimpleName();
-    private List<String> mData;
+    private List<MainActivityBean.UcDataBean.TableBean> mData;
     private Context mContext;
-
-    public MainActivityAdapter( Context mContext,List<String> mData) {
+    private List<String> titleData = new ArrayList<>();
+    private List<String> devIdData = new ArrayList<>();
+    private Map<String,ArrayList<MainActivityBean.UcDataBean.TableBean>> mapData = new HashMap<>();
+    public MainActivityAdapter(Context mContext, List<MainActivityBean.UcDataBean.TableBean> mData) {
         this.mData = mData;
         this.mContext = mContext;
+        parseData();
     }
 
+    private void parseData() {
+        for (MainActivityBean.UcDataBean.TableBean tableBean : mData){
+            if (mapData.containsKey(tableBean.getBrd_devid())){
+                mapData.get(tableBean.getBrd_devid()).add(tableBean);
+                titleData.add(tableBean.getBrd_devms());
+                devIdData.add(tableBean.getBrd_devid());
+            }else {
+                ArrayList<MainActivityBean.UcDataBean.TableBean> list = new ArrayList<>();
+                list.add(tableBean);
+                mapData.put(tableBean.getBrd_devid(),list);
+                titleData.add(tableBean.getBrd_devms());
+                devIdData.add(tableBean.getBrd_devid());
+            }
+
+        }
+    }
 
 
     @Override
@@ -50,11 +72,15 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
 
     @Override
     public void onBindViewHolder(MainActivityHolder holder, final int position) {
-        holder.tvText.setText(mData.get(position));
+        holder.tvText.setText(titleData.get(position));
         holder.content.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (position){
+                Intent intent = new Intent(mContext, ControlWorkShopStateBoardActivity.class);
+                intent.putExtra(ControlWorkShopStateBoardActivity.DATA,mapData.get(devIdData.get(position)));
+                //intent.putExtra(ControlWorkShopStateBoardActivity.START_TYPE, ControlWorkShopStateBoardActivity.START_TYPE_PRODUCTFRAGMENT);
+                mContext.startActivity(intent);
+                /*switch (position){
                     case 0:
                         mContext.startActivity(new Intent(mContext,WorkShopStateBoardActivity.class));
                         break;
@@ -71,10 +97,25 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
                         intent2.putExtra(ControlWorkShopStateBoardActivity.START_TYPE, ControlWorkShopStateBoardActivity.START_TYPE_BLMXFRAGMENT);
                         mContext.startActivity(intent2);
                         break;
+                    case 4:
+                        Intent intent3 = new Intent(mContext, ControlWorkShopStateBoardActivity.class);
+                        intent3.putExtra(ControlWorkShopStateBoardActivity.START_TYPE, ControlWorkShopStateBoardActivity.START_TYPE_PDFFRAGMENT);
+                        mContext.startActivity(intent3);
+                        break;
+                    case 5:
+                        Intent intent4 = new Intent(mContext, ControlWorkShopStateBoardActivity.class);
+                        intent4.putExtra(ControlWorkShopStateBoardActivity.START_TYPE, ControlWorkShopStateBoardActivity.START_TYPE_LINEFRAGMENT);
+                        mContext.startActivity(intent4);
+                        break;
+                    case 6:
+                        Intent intent5 = new Intent(mContext, ControlWorkShopStateBoardActivity.class);
+                        intent5.putExtra(ControlWorkShopStateBoardActivity.START_TYPE, ControlWorkShopStateBoardActivity.START_TYPE_KPIFRAGMENT);
+                        mContext.startActivity(intent5);
+                        break;
                     default:
                         Toast.makeText(v.getContext(),""+mData.get(position),Toast.LENGTH_SHORT).show();
                         break;
-                }
+                }*/
 
             }
         });
@@ -131,7 +172,7 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
 
     @Override
     public int getItemCount() {
-        return mData.size();
+        return titleData.size();
     }
 
     static class MainActivityHolder extends RecyclerView.ViewHolder {

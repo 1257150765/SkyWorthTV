@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape>
+            <solid android:color="@color/linFragment_blue"></solid>
+            <corners android:topLeftRadius="@dimen/y10" android:topRightRadius="@dimen/y10"></corners>
+        </shape>
+    </item>
+    <item android:top="@dimen/y40"
+        android:bottom="1dp"
+        android:left="1dp"
+        android:right="1dp">
+        <shape>
+            <solid android:color="@color/black"></solid>
+        </shape>
+    </item>
+</layer-list>

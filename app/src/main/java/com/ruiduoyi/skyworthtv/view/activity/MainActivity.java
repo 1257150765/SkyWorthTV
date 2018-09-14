@@ -22,16 +22,16 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 
 import com.ruiduoyi.skyworthtv.R;
+import com.ruiduoyi.skyworthtv.model.bean.MainActivityBean;
 import com.ruiduoyi.skyworthtv.contact.MainActivityContact;
+import com.ruiduoyi.skyworthtv.model.cache.PreferencesUtil;
 import com.ruiduoyi.skyworthtv.presentor.MainActivityPresentor;
+import com.ruiduoyi.skyworthtv.util.Constant;
 import com.ruiduoyi.skyworthtv.view.adapter.MainActivityAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,12 +42,14 @@ import butterknife.ButterKnife;
 public class MainActivity extends BaseActivity implements MainActivityContact.View {
 
     private static final String TAG = MainActivity.class.getSimpleName();
+    private static final int REQUEST_CODE_OVERLAY_WINDOW = 1001;
     @BindView(R.id.rv_recycler_mainActivity)
     RecyclerView rvRecycler;
     @BindView(R.id.ctv_isLauncher)
     CheckBox ctvIsLauncher;
     private ProgressDialog downloadProgressDialog;
     private MainActivityPresentor presentor;
+    private boolean isLauncher = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,24 +57,40 @@ public class MainActivity extends BaseActivity implements MainActivityContact.Vi
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         init();
+        initOverlayWindow();
         presentor = new MainActivityPresentor(this, this);
+
+    }
+
+    /**
+     * 初始化悬浮窗（显示横幅）
+     */
+    private void initOverlayWindow() {
+        //startService(new Intent(MainActivity.this, OverlayWindowService.class));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
     }
 
     private void init() {
-
+        final PreferencesUtil preferencesUtil = new PreferencesUtil(this);
+        ctvIsLauncher.setChecked(preferencesUtil.getBoolean(Constant.CACHE_DATA_NAME_ISLAUNCHER));
+        ctvIsLauncher.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                isLauncher = isChecked;
+                preferencesUtil.setBoolean(Constant.CACHE_DATA_NAME_ISLAUNCHER,isLauncher);
+            }
+        });
         downloadProgressDialog = new ProgressDialog(this);
         downloadProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         downloadProgressDialog.setCancelable(false);
         downloadProgressDialog.setCanceledOnTouchOutside(false);
         downloadProgressDialog.setTitle("下载中");
         downloadProgressDialog.setMax(100);
-        List<String> data = new ArrayList<>();
-        for (int i = 1; i < 11; i++) {
-            data.add("车间" + i);
-        }
-        rvRecycler.setAdapter(new MainActivityAdapter(MainActivity.this, data));
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2, LinearLayoutManager.HORIZONTAL, false);
-        rvRecycler.setLayoutManager(gridLayoutManager);
+
 
         /*Display display = getWindowManager().getDefaultDisplay(); //Activity#getWindowManager()
         Point size = new Point();
@@ -95,6 +113,7 @@ public class MainActivity extends BaseActivity implements MainActivityContact.Vi
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             presentor.update(url);
+
                         }
                     })
                     .setNegativeButton("否", new DialogInterface.OnClickListener() {
@@ -125,5 +144,15 @@ public class MainActivity extends BaseActivity implements MainActivityContact.Vi
             downloadProgressDialog.dismiss();
         }
         //Settings.Global.putInt(getContentResolver(), Settings.Global.INSTALL_NON_MARKET_APPS,true?1:0);
+    }
+
+    @Override
+    public void onLoadDataSucceed(MainActivityBean bean) {
+        if (!bean.isUtStatus()){
+            return;
+        }
+        rvRecycler.setAdapter(new MainActivityAdapter(MainActivity.this, bean.getUcData().getTable()));
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2, LinearLayoutManager.HORIZONTAL, false);
+        rvRecycler.setLayoutManager(gridLayoutManager);
     }
 }

@@ -2,4 +2,10 @@
 <resources>
     <dimen name="normalTextSize">@dimen/y23</dimen>
     <dimen name="normalSmallTextSize">@dimen/y21</dimen>
+    <dimen name="lineFragmentNormalTextSize">@dimen/y21</dimen>
+    <dimen name="lineFragmentSmallTextSize">@dimen/y21</dimen>
+
+    <dimen name="lineFragmentNormalTitleTextSize">@dimen/y28</dimen>
+    <dimen name="small">@dimen/x16</dimen>
+    <dimen name="small2">@dimen/x20</dimen>
 </resources>

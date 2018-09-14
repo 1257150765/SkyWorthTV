@@ -5,9 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.ruiduoyi.skyworthtv.view.activity.ControlWorkShopStateBoardActivity">
+    
+
     <LinearLayout
         android:orientation="vertical"
         android:id="@+id/ll_fragmentContainer_controlStateBoardBoard"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></LinearLayout>
+        android:layout_height="match_parent"/>
+
+
 </android.support.constraint.ConstraintLayout>

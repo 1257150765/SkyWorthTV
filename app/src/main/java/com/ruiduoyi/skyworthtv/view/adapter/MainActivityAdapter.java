@@ -37,6 +37,12 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
     private static final String TAG = MainActivityHolder.class.getSimpleName();
     private List<MainActivityBean.UcDataBean.TableBean> mData;
     private Context mContext;
+    private OnItemClickListener listener;
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
     private List<String> titleData = new ArrayList<>();
     private List<String> devIdData = new ArrayList<>();
     private Map<String,ArrayList<MainActivityBean.UcDataBean.TableBean>> mapData = new HashMap<>();
@@ -76,6 +82,9 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
         holder.content.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (listener != null){
+                    listener.onItemClick(devIdData.get(position));
+                }
                 Intent intent = new Intent(mContext, ControlWorkShopStateBoardActivity.class);
                 intent.putExtra(ControlWorkShopStateBoardActivity.DATA,mapData.get(devIdData.get(position)));
                 //intent.putExtra(ControlWorkShopStateBoardActivity.START_TYPE, ControlWorkShopStateBoardActivity.START_TYPE_PRODUCTFRAGMENT);
@@ -184,5 +193,8 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
             content = itemView;
             ButterKnife.bind(this, itemView);
         }
+    }
+    public interface OnItemClickListener {
+        void onItemClick(String devId);
     }
 }

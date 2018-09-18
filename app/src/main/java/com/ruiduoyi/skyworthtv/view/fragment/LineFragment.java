@@ -3,7 +3,6 @@ package com.ruiduoyi.skyworthtv.view.fragment;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -37,8 +36,6 @@ import com.ruiduoyi.skyworthtv.view.adapter.LineFragmentPlanListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -113,6 +110,8 @@ public class LineFragment extends BaseFragment implements LineFramentContact.Vie
     TextView tvJrcl;
     @BindView(R.id.dbv_complete_lineFragment)
     DashboardView dbvComplete;
+    @BindView(R.id.tv_lineName_lineFragment)
+    TextView tvLineName;
 
 
     private View mRootView;
@@ -142,13 +141,14 @@ public class LineFragment extends BaseFragment implements LineFramentContact.Vie
         presentor = new LineFragmentPresentor(getContext(), this);
         return mRootView;
     }
-    public static BaseFragment newInstance(String devId,String funcId,String changeTime, String reflushTime) {
+
+    public static BaseFragment newInstance(String devId, String funcId, String changeTime, String reflushTime) {
         LineFragment fragment = new LineFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(BaseFragment.DEV_ID,devId);
-        bundle.putString(BaseFragment.FUNC_ID,funcId);
-        bundle.putString(BaseFragment.CHANGETIME,changeTime);
-        bundle.putString(BaseFragment.REFLUSHTIME,reflushTime);
+        bundle.putString(BaseFragment.DEV_ID, devId);
+        bundle.putString(BaseFragment.FUNC_ID, funcId);
+        bundle.putString(BaseFragment.CHANGETIME, changeTime);
+        bundle.putString(BaseFragment.REFLUSHTIME, reflushTime);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -156,9 +156,8 @@ public class LineFragment extends BaseFragment implements LineFramentContact.Vie
     @Override
     protected void load() {
         super.load();
-        presentor.loadData(devId,funcId);
+        presentor.loadData(devId, funcId);
     }
-
 
 
     /**
@@ -351,7 +350,7 @@ public class LineFragment extends BaseFragment implements LineFramentContact.Vie
         List<Integer> y = new ArrayList<>();
         for (int i = 0; i < table4.size(); i++) {
             int t = table4.get(i).getRkd_rksl_v();
-            if (t > max){
+            if (t > max) {
                 max = t;
             }
             y.add(t);
@@ -409,6 +408,7 @@ public class LineFragment extends BaseFragment implements LineFramentContact.Vie
 
     /**
      * 达成率
+     *
      * @param table5
      */
     private void initMiddle2(List<LineFragmentBean.UcDataBean.Table5Bean> table5) {
@@ -470,8 +470,8 @@ public class LineFragment extends BaseFragment implements LineFramentContact.Vie
     }
 
 
-
     private void initTop(LineFragmentBean.UcDataBean.Table1Bean bean) {
+        tvLineName.setText("线别:"+bean.getPqd_xbdm());
         tvJrcl.setText("今日产量\n\n" + bean.getRkd_rksl_v());
         dbvComplete.setPercent((int) bean.getPqd_dclv());
         dbvComplete.setEndColor(getResources().getColor(R.color.linFragment_blue3));

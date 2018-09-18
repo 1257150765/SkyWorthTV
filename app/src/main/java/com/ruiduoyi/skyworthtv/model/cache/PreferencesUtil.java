@@ -19,4 +19,10 @@ public class PreferencesUtil {
     public void setBoolean(String name,boolean value){
          mContext.getSharedPreferences(DATA_NAME,Context.MODE_PRIVATE).edit().putBoolean(name,value).commit();
     }
+    public String getString(String name){
+        return mContext.getSharedPreferences(DATA_NAME,Context.MODE_PRIVATE).getString(name,"");
+    }
+    public void setString(String name,String value){
+        mContext.getSharedPreferences(DATA_NAME,Context.MODE_PRIVATE).edit().putString(name,value).commit();
+    }
 }

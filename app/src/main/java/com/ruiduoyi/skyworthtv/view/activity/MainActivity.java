@@ -17,6 +17,7 @@ package com.ruiduoyi.skyworthtv.view.activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,6 +26,7 @@ import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
+import com.google.gson.Gson;
 import com.ruiduoyi.skyworthtv.R;
 import com.ruiduoyi.skyworthtv.model.bean.MainActivityBean;
 import com.ruiduoyi.skyworthtv.contact.MainActivityContact;
@@ -33,13 +35,15 @@ import com.ruiduoyi.skyworthtv.presentor.MainActivityPresentor;
 import com.ruiduoyi.skyworthtv.util.Constant;
 import com.ruiduoyi.skyworthtv.view.adapter.MainActivityAdapter;
 
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /*
  * MainActivity class that loads {@link MainFragment}.
  */
-public class MainActivity extends BaseActivity implements MainActivityContact.View {
+public class MainActivity extends BaseActivity implements MainActivityContact.View, MainActivityAdapter.OnItemClickListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final int REQUEST_CODE_OVERLAY_WINDOW = 1001;
@@ -50,7 +54,7 @@ public class MainActivity extends BaseActivity implements MainActivityContact.Vi
     private ProgressDialog downloadProgressDialog;
     private MainActivityPresentor presentor;
     private boolean isLauncher = false;
-
+    private PreferencesUtil preferencesUtil;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +63,6 @@ public class MainActivity extends BaseActivity implements MainActivityContact.Vi
         init();
         initOverlayWindow();
         presentor = new MainActivityPresentor(this, this);
-
     }
 
     /**
@@ -75,8 +78,9 @@ public class MainActivity extends BaseActivity implements MainActivityContact.Vi
     }
 
     private void init() {
-        final PreferencesUtil preferencesUtil = new PreferencesUtil(this);
-        ctvIsLauncher.setChecked(preferencesUtil.getBoolean(Constant.CACHE_DATA_NAME_ISLAUNCHER));
+
+        preferencesUtil = new PreferencesUtil(this);
+
         ctvIsLauncher.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -84,14 +88,13 @@ public class MainActivity extends BaseActivity implements MainActivityContact.Vi
                 preferencesUtil.setBoolean(Constant.CACHE_DATA_NAME_ISLAUNCHER,isLauncher);
             }
         });
+        ctvIsLauncher.setChecked(preferencesUtil.getBoolean(Constant.CACHE_DATA_NAME_ISLAUNCHER));
         downloadProgressDialog = new ProgressDialog(this);
         downloadProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         downloadProgressDialog.setCancelable(false);
         downloadProgressDialog.setCanceledOnTouchOutside(false);
         downloadProgressDialog.setTitle("下载中");
         downloadProgressDialog.setMax(100);
-
-
         /*Display display = getWindowManager().getDefaultDisplay(); //Activity#getWindowManager()
         Point size = new Point();
         display.getSize(size);
@@ -151,8 +154,39 @@ public class MainActivity extends BaseActivity implements MainActivityContact.Vi
         if (!bean.isUtStatus()){
             return;
         }
-        rvRecycler.setAdapter(new MainActivityAdapter(MainActivity.this, bean.getUcData().getTable()));
+        MainActivityAdapter adapter = new MainActivityAdapter(MainActivity.this, bean.getUcData().getTable());
+        adapter.setOnItemClickListener(this);
+        rvRecycler.setAdapter(adapter);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2, LinearLayoutManager.HORIZONTAL, false);
         rvRecycler.setLayoutManager(gridLayoutManager);
+        String devId = preferencesUtil.getString(Constant.CACHE_DATA_NAME_DEVID);
+        if (isLauncher && !"".equals(devId)){
+            /*data = data.replaceAll("&quot;","\"");
+            Gson gson = new Gson();
+            Temp temp = gson.fromJson(data, Temp.class);*/
+            ArrayList<MainActivityBean.UcDataBean.TableBean> list = new ArrayList<>();
+            for (MainActivityBean.UcDataBean.TableBean tableBean : bean.getUcData().getTable()){
+                if (devId.equals(tableBean.getBrd_devid())){
+                    list.add(tableBean);
+                }
+
+            }
+            if (list.size() >0){
+                Intent intent = new Intent(this, ControlWorkShopStateBoardActivity.class);
+                intent.putExtra(ControlWorkShopStateBoardActivity.DATA,list);
+                //intent.putExtra(ControlWorkShopStateBoardActivity.START_TYPE, ControlWorkShopStateBoardActivity.START_TYPE_PRODUCTFRAGMENT);
+                startActivity(intent);
+            }
+
+        }
+    }
+
+
+    @Override
+    public void onItemClick(String  devId) {
+        if (isLauncher){
+
+            preferencesUtil.setString(Constant.CACHE_DATA_NAME_DEVID,devId);
+        }
     }
 }

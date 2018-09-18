@@ -7,4 +7,6 @@ package com.ruiduoyi.skyworthtv.util;
 public class Constant {
     public static final String CACHE_DATA_NAME_ISLAUNCHER = "isLauncher";
 
+    public static final String CACHE_DATA_NAME_BOARD_DATA = "boardData";
+    public static final String CACHE_DATA_NAME_DEVID = "devId";
 }

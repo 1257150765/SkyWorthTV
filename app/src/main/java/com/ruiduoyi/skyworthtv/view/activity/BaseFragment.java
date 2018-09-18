@@ -23,15 +23,15 @@ public class BaseFragment extends Fragment {
     FragmentShowSucceedListener listener;
     protected static final String CHANGETIME = "changeTime";
     protected static final String REFLUSHTIME = "reflushTime";
-    protected long changeTime = 600L;
-    protected long reflushTime = 30L;
-    protected String devId = "";
+    protected long changeTime = 600L;//Fragment间，切换的时间
+    protected long reflushTime = 30L;//Fragment内数据刷新的时间（PDF是切换页数时间，员工评价同理但每一页都会请求数据）
+    protected String devId = "";//设备id，后台会
     protected boolean isHidden;
     private long time = 0L;
     protected ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(2);
     protected String funcId = "";
     private boolean isRun = false;
-    private long initalDalayTime = 1L;//延时3秒加载数据
+    private long initalDalayTime = 1L;//延时1秒加载数据
 
     public static BaseFragment newInstance(String devId,String funcId,String changeTime, String reflushTime) {
         BaseFragment fragment = new BaseFragment();
@@ -50,8 +50,8 @@ public class BaseFragment extends Fragment {
         if (getArguments() != null) {
             devId = getArguments().getString(DEV_ID);
             funcId = getArguments().getString(FUNC_ID);
-            /*changeTime = Long.parseLong(getArguments().getString(CHANGETIME));
-            reflushTime = Long.parseLong(getArguments().getString(REFLUSHTIME));*/
+            //changeTime = Long.parseLong(getArguments().getString(CHANGETIME));
+            //reflushTime = Long.parseLong(getArguments().getString(REFLUSHTIME));
             changeTime = 30L;
             reflushTime = 10L;
         }

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.github.barteksc.pdfviewer.PDFView;
+import com.github.barteksc.pdfviewer.listener.OnLoadCompleteListener;
 import com.github.barteksc.pdfviewer.listener.OnPageChangeListener;
 import com.github.barteksc.pdfviewer.util.FitPolicy;
 import com.ruiduoyi.skyworthtv.R;
@@ -48,6 +49,8 @@ public class PDFFragment extends BaseFragment implements PDFFragmentContact.View
     private int currFileIndex = 0;//当前展示的pdf文件（可能有多个文件）
     private boolean isEnd = true;
     private PDFFragmentBean data;
+    private long allPDFTime;
+
     public PDFFragment() {
         // Required empty public constructor
     }
@@ -141,7 +144,6 @@ public class PDFFragment extends BaseFragment implements PDFFragmentContact.View
 
     }
 
-    private float yDistance  = 0;
     private void initPdfData(final byte[] file) {
 
         pdfView.fromBytes(file)
@@ -154,7 +156,22 @@ public class PDFFragment extends BaseFragment implements PDFFragmentContact.View
                     }
                 })
                 .pageFitPolicy(FitPolicy.HEIGHT)
+                .onLoad(new OnLoadCompleteListener() {
+                    @Override
+                    public void loadComplete(int nbPages) {
+                        //修改PDFFragment停留时间，让Fragment展示所有的PDF
+                        if (currFileIndex == 0){
+                            allPDFTime = 0;//当第一个pdf时，重新计算展示所有pdf的时间
+                        }
+                        allPDFTime += nbPages * reflushTime;
+                        Log.d(TAG, "initPdfData: allPDFTime"+allPDFTime);
+                        if (changeTime < allPDFTime){
+                            changeTime = allPDFTime;
+                        }
+                    }
+                })
                 .load();
+
     }
 
     @Override
@@ -170,18 +187,6 @@ public class PDFFragment extends BaseFragment implements PDFFragmentContact.View
     public void onLoadDataSucceed(final PDFFragmentBean bean) {
         if (bean.isUtStatus()){
              data = bean;
-            /*executors.scheduleAtFixedRate(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
-
-                }
-            },0,showTime, TimeUnit.SECONDS);*/
-
-
         }
     }
 }

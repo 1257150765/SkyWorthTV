@@ -148,11 +148,12 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/tv_lineName_lineFragment"
                             style="@style/LineFragmentImageViewStyle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/y1"
-                            android:text="线别:K1"
+                            android:text="线别:"
                             android:textColor="@color/orange"
                             android:textSize="@dimen/y50" />
 
@@ -236,7 +237,7 @@
                 android:layout_height="@dimen/y80"
                 android:layout_gravity="center_horizontal"
                 android:background="@drawable/line_fragment_title_background"
-                android:text="SKYWOTRH创维"
+                android:text="SKYWORTH创维"
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="@dimen/y43"

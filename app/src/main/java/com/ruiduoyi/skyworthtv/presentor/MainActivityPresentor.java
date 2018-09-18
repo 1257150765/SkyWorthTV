@@ -91,7 +91,6 @@ public class MainActivityPresentor implements MainActivityContact.Presentor {
 
             @Override
             public void onComplete() {
-
             }
         });
 

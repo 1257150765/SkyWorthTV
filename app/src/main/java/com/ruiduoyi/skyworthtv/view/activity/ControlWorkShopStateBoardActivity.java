@@ -27,7 +27,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * 控制器车间
+ * 控制器车间，
+ * 这个Activity仅仅是一个壳，主要内容是Fragment，
  *
  */
 public class ControlWorkShopStateBoardActivity extends AppCompatActivity implements BaseFragment.FragmentShowSucceedListener {

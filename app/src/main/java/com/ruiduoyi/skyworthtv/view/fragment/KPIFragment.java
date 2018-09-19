@@ -338,17 +338,22 @@ public class KPIFragment extends BaseFragment implements KPIFragmentContact.View
     @Override
     public void onLoadDataSucceed(KPIFragmentBean bean) {
 
-        Log.d(TAG, "onLoadDataSucceed: 数据加载成功 ");
-        if (bean.isUtStatus()){
-            List<KPIFragmentBean.UcDataBean.TableBean> table = bean.getUcData().getTable();
-            initLeftTop(table);
-            List<KPIFragmentBean.UcDataBean.Table1Bean> table1 = bean.getUcData().getTable1();
-            initRightTop(table1);
-            List<KPIFragmentBean.UcDataBean.Table2Bean> table2 = bean.getUcData().getTable2();
-            initLeftBottom(table2);
-            List<KPIFragmentBean.UcDataBean.Table3Bean> table3 = bean.getUcData().getTable3();
-            initRightBottom(table3);
+        //Log.d(TAG, "onLoadDataSucceed: 数据加载成功 ");
+        try {
+            if (bean.isUtStatus()){
+                List<KPIFragmentBean.UcDataBean.TableBean> table = bean.getUcData().getTable();
+                initLeftTop(table);
+                List<KPIFragmentBean.UcDataBean.Table1Bean> table1 = bean.getUcData().getTable1();
+                initRightTop(table1);
+                List<KPIFragmentBean.UcDataBean.Table2Bean> table2 = bean.getUcData().getTable2();
+                initLeftBottom(table2);
+                List<KPIFragmentBean.UcDataBean.Table3Bean> table3 = bean.getUcData().getTable3();
+                initRightBottom(table3);
+            }
+        }catch (Exception e){
+
         }
+
     }
 
     private void initRightBottom(List<KPIFragmentBean.UcDataBean.Table3Bean> table3) {
@@ -394,6 +399,10 @@ public class KPIFragment extends BaseFragment implements KPIFragmentContact.View
             set.setDrawFilled(true);
             set.setDrawValues(true);
             set.setValueTextColor(Color.WHITE);
+            set.setDrawCircleHole(true);
+            set.setCircleColorHole(getColor(mapData.get(xb).get(0).getScl_color()));
+            set.setCircleColor(getColor(mapData.get(xb).get(0).getScl_color()));
+
             lineData.addDataSet(set);
         }
         final String finalTimeKey = timeKey;
@@ -494,7 +503,6 @@ public class KPIFragment extends BaseFragment implements KPIFragmentContact.View
         barData.setValueTextColor(Color.WHITE);
         barData.setDrawValues(true);
         barData.setValueTextSize(6);
-
         //data2.setValueTypeface(mTfLight);
         hbcLeftBottom.setData(barData);
         // specify the width each bar should have

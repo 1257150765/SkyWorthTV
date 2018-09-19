@@ -1,6 +1,7 @@
 package com.ruiduoyi.skyworthtv.contact;
 
 import com.ruiduoyi.skyworthtv.model.bean.MainActivityBean;
+import com.ruiduoyi.skyworthtv.model.bean.NotificationBean;
 
 /**
  * Created by Chen on 2018-08-10.
@@ -16,11 +17,13 @@ public interface MainActivityContact {
         void onUpdateComplete();
 
         void onLoadDataSucceed(MainActivityBean bean);
+
     }
 
     public interface Presentor {
         void checkUpdate();
         void update(String url);
         void loadData();
+
     }
 }

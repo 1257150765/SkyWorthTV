@@ -89,13 +89,18 @@ public class BLMXFragment extends BaseFragment implements BLMXFragmentContact.Vi
 
     @Override
     public void onLoadDataSucceed(BLMXFragmentBean bean) {
-        //SimpleDateFormat formatter = new SimpleDateFormat("MM月dd日");
-        if (!bean.isUtStatus() || bean.getUcData().getTable().size() <=0){
-            return;
+        try {
+            //SimpleDateFormat formatter = new SimpleDateFormat("MM月dd日");
+            if (!bean.isUtStatus() || bean.getUcData().getTable().size() <=0){
+                return;
+            }
+            List<BLMXFragmentBean.UcDataBean.TableBean> beanList = bean.getUcData().getTable();
+            tvTitle.setText(beanList.get(0).getErr_rq()+"不良明细");
+            rvRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+            rvRecycler.setAdapter(new BLMXFragmentAdapter(getContext(), beanList));
+        }catch (Exception e){
+
         }
-        List<BLMXFragmentBean.UcDataBean.TableBean> beanList = bean.getUcData().getTable();
-        tvTitle.setText(beanList.get(0).getErr_rq()+"不良明细");
-        rvRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        rvRecycler.setAdapter(new BLMXFragmentAdapter(getContext(), beanList));
+
     }
 }

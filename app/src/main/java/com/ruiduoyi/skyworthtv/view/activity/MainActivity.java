@@ -30,6 +30,7 @@ import com.google.gson.Gson;
 import com.ruiduoyi.skyworthtv.R;
 import com.ruiduoyi.skyworthtv.model.bean.MainActivityBean;
 import com.ruiduoyi.skyworthtv.contact.MainActivityContact;
+import com.ruiduoyi.skyworthtv.model.bean.NotificationBean;
 import com.ruiduoyi.skyworthtv.model.cache.PreferencesUtil;
 import com.ruiduoyi.skyworthtv.presentor.MainActivityPresentor;
 import com.ruiduoyi.skyworthtv.util.Constant;
@@ -72,12 +73,7 @@ public class MainActivity extends BaseActivity implements MainActivityContact.Vi
         presentor.loadData();
     }
 
-    /**
-     * 初始化悬浮窗（显示横幅）
-     */
-    private void initOverlayWindow() {
-        startService(new Intent(MainActivity.this, OverlayWindowService.class));
-    }
+
 
     @Override
     protected void onPause() {
@@ -184,10 +180,14 @@ public class MainActivity extends BaseActivity implements MainActivityContact.Vi
                     startActivity(intent);
                 }
                 isFirstIn = false;
-                initOverlayWindow();
+                //presentor.loadNotification();
+                Intent intent = new Intent(MainActivity.this, OverlayWindowService.class);
+                startService(intent);
             }
         }
     }
+
+
 
 
     @Override

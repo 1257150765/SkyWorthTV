@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.ruiduoyi.skyworthtv.model.bean.MainActivityBean;
 import com.ruiduoyi.skyworthtv.contact.MainActivityContact;
+import com.ruiduoyi.skyworthtv.model.bean.NotificationBean;
 import com.ruiduoyi.skyworthtv.model.net.RetrofitManager;
 import com.ruiduoyi.skyworthtv.util.DownloadUtils;
 
@@ -90,8 +91,12 @@ public class MainActivityPresentor implements MainActivityContact.Presentor {
 
             @Override
             public void onComplete() {
+
             }
         });
 
     }
+
+
+
 }

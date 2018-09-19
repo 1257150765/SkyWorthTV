@@ -571,15 +571,20 @@ public class LineFragment extends BaseFragment implements LineFramentContact.Vie
 
     @Override
     public void onLoadDataSucceed(LineFragmentBean value) {
-        initTable(value.getUcData().getTable());
-        initTable1(value.getUcData().getTable1());
-        initTable2(value.getUcData().getTable2());
-        initTable3(value.getUcData().getTable3());
-        initTable4(value.getUcData().getTable4());
-        initTable5(value.getUcData().getTable5());
-        initTable6(value.getUcData().getTable6());
-        initTable7(value.getUcData().getTable7());
-        initTable8(value.getUcData().getTable8());
+
+        try {
+            initTable(value.getUcData().getTable());
+            initTable1(value.getUcData().getTable1());
+            initTable2(value.getUcData().getTable2());
+            initTable3(value.getUcData().getTable3());
+            initTable4(value.getUcData().getTable4());
+            initTable5(value.getUcData().getTable5());
+            initTable6(value.getUcData().getTable6());
+            initTable7(value.getUcData().getTable7());
+            initTable8(value.getUcData().getTable8());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void initTable8(List<LineFragmentBean.UcDataBean.Table8Bean> table8) {

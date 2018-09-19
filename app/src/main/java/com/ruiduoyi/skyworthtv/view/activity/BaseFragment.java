@@ -50,10 +50,11 @@ public class BaseFragment extends Fragment {
         if (getArguments() != null) {
             devId = getArguments().getString(DEV_ID);
             funcId = getArguments().getString(FUNC_ID);
-            //changeTime = Long.parseLong(getArguments().getString(CHANGETIME));
-            //reflushTime = Long.parseLong(getArguments().getString(REFLUSHTIME));
-            changeTime = 30L;
-            reflushTime = 10L;
+            changeTime = Long.parseLong(getArguments().getString(CHANGETIME));
+            reflushTime = Long.parseLong(getArguments().getString(REFLUSHTIME));
+            //仅用在测试
+            //changeTime = 30L;
+            //reflushTime = 10L;
         }
 
         /*executor.scheduleAtFixedRate(new Runnable() {

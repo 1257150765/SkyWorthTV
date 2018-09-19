@@ -141,11 +141,11 @@ public class ProductFragment extends BaseFragment implements ProductFragmentCont
             }
             yVals1.add(new BarEntry(i, (float) yjscxlv));
             //生产效率
-            int scxlv = table2Bean.getPqd_scxlv();
+            double scxlv = table2Bean.getPqd_scxlv();
             if (scxlv > max){
                 max = (float) scxlv;
             }
-            yVals2.add(new BarEntry(i, scxlv));
+            yVals2.add(new BarEntry(i, (float) scxlv));
             //达成率
             double jhdclv = table2Bean.getPqd_jhdclv();
             if (jhdclv >max){
@@ -256,9 +256,14 @@ public class ProductFragment extends BaseFragment implements ProductFragmentCont
 
     @Override
     public void onLoadDataSucceed(ProductFragmentBean bean) {
-        initList(bean.getUcData().getTable());
-        initErrorCount(bean.getUcData().getTable1());
-        initBarChart(bean.getUcData().getTable2());
+
+        try {
+            initList(bean.getUcData().getTable());
+            initErrorCount(bean.getUcData().getTable1());
+            initBarChart(bean.getUcData().getTable2());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void initErrorCount(List<ProductFragmentBean.UcDataBean.Table1Bean> table1) {

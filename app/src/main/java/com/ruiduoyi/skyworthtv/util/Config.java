@@ -20,4 +20,6 @@ public class Config {
     public static final String PRGID_PDF = "TVBOARDPDF";
     public static final String PRGID_BLMX = "TVBOARD02";
     public static final String TYPE_FUNC_NAME_ALL = "MKLIST";
+    public static final String NOTIFICATION_DEVID = "K1TV";
+    public static final String NOTIFICATION_FUNCID = "NOTICE";
 }

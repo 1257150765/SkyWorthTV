@@ -8,6 +8,7 @@ import com.ruiduoyi.skyworthtv.model.bean.MainActivityBean;
 import com.ruiduoyi.skyworthtv.model.bean.BLMXFragmentBean;
 import com.ruiduoyi.skyworthtv.model.bean.BaseBean;
 import com.ruiduoyi.skyworthtv.model.bean.LineFragmentBean;
+import com.ruiduoyi.skyworthtv.model.bean.NotificationBean;
 import com.ruiduoyi.skyworthtv.model.bean.PDFFragmentBean;
 import com.ruiduoyi.skyworthtv.model.bean.ProductFragmentBean;
 import com.ruiduoyi.skyworthtv.model.bean.StaffInfo;
@@ -16,6 +17,7 @@ import com.ruiduoyi.skyworthtv.util.Config;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -158,6 +160,11 @@ public class RetrofitManager {
                 .getProductData(Config.PRGID_BLMX,Config.KEY_SERID,key_DevId,funcId)
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
+    public static Observable<NotificationBean> getNotification(){
+            return retrofit.create(Api.class)
+                    .getNotification(Config.PRGID_BLMX,Config.KEY_SERID,Config.NOTIFICATION_DEVID,Config.NOTIFICATION_FUNCID)
+                    .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+        }
 
     public static Observable<MainActivityBean> getAllBoardData(){
         return retrofit.create(Api.class)
@@ -167,32 +174,10 @@ public class RetrofitManager {
 
 
 
-
     interface Api{
         @GET("SmtPDADataDeal")
         Observable<BaseBean<StaffInfo>> getWorkListgin(@Query("key_prgid") String key_prgid, @Query("key_srvid") String key_srvid, @Query("key_page") String key_page);
 
-        /*@GET("SmtPDADataDeal")
-        Observable<BaseBean<ManagerBean>> getManager(@Query("key_prgid") String key_prgid,@Query("key_srvid") String key_srvid, @Query("key_FuncName") String key_FuncName, @Query("key_xbdm") String key_xbdm);
-
-        @GET("SmtPDADataDeal")
-        Observable<BaseBean<PlanListBean>> getPlanList(@Query("key_prgid") String key_prgid,@Query("key_srvid") String key_srvid, @Query("key_FuncName") String key_FuncName, @Query("key_xbdm") String key_xbdm);
-
-        @GET("SmtPDADataDeal")
-        Observable<BaseBean<LineFinishRateBean>> getLineFinishRate(@Query("key_prgid") String key_prgid, @Query("key_srvid") String key_srvid, @Query("key_FuncName") String key_FuncName, @Query("key_xbdm") String key_xbdm);
-
-        @GET("SmtPDADataDeal")
-        Observable<BaseBean<CurrPlanBean>> getCurrPlan(@Query("key_prgid") String key_prgid, @Query("key_srvid") String key_srvid, @Query("key_FuncName") String key_FuncName, @Query("key_xbdm") String key_xbdm);
-
-        @GET("SmtPDADataDeal")
-        Observable<BaseBean<LineSDQtyBean>> getLineSDQty(@Query("key_prgid") String key_prgid, @Query("key_srvid") String key_srvid, @Query("key_FuncName") String key_FuncName, @Query("key_xbdm") String key_xbdm);
-
-        @GET("SmtPDADataDeal")
-        Observable<BaseBean<Last7DayCompleteBean>> getLast7DayComplete(@Query("key_prgid") String key_prgid, @Query("key_srvid") String key_srvid, @Query("key_FuncName") String key_FuncName, @Query("key_xbdm") String key_xbdm);
-
-        @GET("SmtPDADataDeal")
-        Observable<BaseBean<LineErrorCountBean>> getLineErrorCount(@Query("key_prgid") String key_prgid, @Query("key_srvid") String key_srvid, @Query("key_FuncName") String key_FuncName, @Query("key_xbdm") String key_xbdm);
-        */
         @GET("SmtPDADataDeal")
         Observable<LineFragmentBean> getLineData(@Query("key_prgid") String key_prgid, @Query("key_srvid") String key_srvid, @Query("Key_DevId") String Key_DevId, @Query("key_FuncId")String key_FuncId);
 
@@ -207,6 +192,9 @@ public class RetrofitManager {
 
         @GET("SmtPDADataDeal")
         Observable<ProductFragmentBean> getProductData(@Query("key_prgid") String key_prgid, @Query("key_srvid") String key_srvid, @Query("Key_DevId") String Key_DevId, @Query("key_FuncId")String key_FuncId);
+
+        @GET("SmtPDADataDeal")
+        Observable<NotificationBean> getNotification(@Query("key_prgid") String key_prgid, @Query("key_srvid") String key_srvid, @Query("Key_DevId") String Key_DevId, @Query("key_FuncId")String key_FuncId);
 
         @GET("SmtPDADataDeal")
         Observable<MainActivityBean> getAllBoardData(@Query("key_prgid") String key_prgid, @Query("key_srvid") String key_srvid, @Query("key_FuncId") String key_FuncId);

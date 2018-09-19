@@ -30,4 +30,7 @@ public class DensityUtil {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (pxValue / scale + 0.5f);
     }
+    public static int getPhoneHeight(Context context){
+       return  context.getResources().getDisplayMetrics().heightPixels;
+    }
 }

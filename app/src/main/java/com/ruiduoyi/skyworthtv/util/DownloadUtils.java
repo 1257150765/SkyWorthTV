@@ -110,7 +110,6 @@ public class DownloadUtils {
         try {
             builder.start();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 

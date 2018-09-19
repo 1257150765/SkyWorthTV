@@ -24,9 +24,9 @@ public class ProductFragmentAdapter extends RecyclerView.Adapter<ProductFragment
 
 
     private Context mContext;
-    private List<ProductFragmentBean> mData;
+    private List<ProductFragmentBean.UcDataBean.TableBean> mData;
 
-    public ProductFragmentAdapter(Context mContext, List<ProductFragmentBean> mData) {
+    public ProductFragmentAdapter(Context mContext, List<ProductFragmentBean.UcDataBean.TableBean> mData) {
         this.mContext = mContext;
         this.mData = mData;
     }
@@ -41,15 +41,15 @@ public class ProductFragmentAdapter extends RecyclerView.Adapter<ProductFragment
 
     @Override
     public void onBindViewHolder(ProductFragmentHolder holder, int position) {
-        ProductFragmentBean bean = mData.get(position);
-        holder.tvBz.setText(bean.getA1());
-        holder.tvScddh.setText(bean.getA2());
-        holder.tvWlbh.setText(bean.getA3());
-        holder.tvCpmc.setText(bean.getA4());
-        holder.tvDds.setText(bean.getA5());
-        holder.tvSjwcsl.setText(bean.getA6());
-        holder.tvBlps.setText(bean.getA8());
-        holder.tvBll.setText(bean.getA9());
+        ProductFragmentBean.UcDataBean.TableBean bean = mData.get(position);
+        holder.tvBz.setText(bean.getPqd_bcdm());
+        holder.tvScddh.setText(bean.getPqd_djbh());
+        holder.tvWlbh.setText(bean.getPlm_wldm());
+        holder.tvCpmc.setText(bean.getItm_pmgg());
+        holder.tvDds.setText(""+bean.getPlm_jhsl());
+        holder.tvSjwcsl.setText(""+bean.getRkd_day_rksl_v());
+        holder.tvBlps.setText(""+bean.getErr_day_gzsl_v());
+        holder.tvBll.setText(""+(((float)bean.getErr_day_gzsl_v())/bean.getRkd_day_rksl_v()*100)+"%");
     }
 
 

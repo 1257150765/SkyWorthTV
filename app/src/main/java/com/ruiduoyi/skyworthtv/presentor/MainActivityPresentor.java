@@ -22,7 +22,6 @@ public class MainActivityPresentor implements MainActivityContact.Presentor {
     public MainActivityPresentor(Context mContext, MainActivityContact.View view) {
         this.mContext = mContext;
         this.view = view;
-        loadData();
         //checkUpdate();
     }
 
@@ -73,7 +72,7 @@ public class MainActivityPresentor implements MainActivityContact.Presentor {
 
     @Override
     public void loadData() {
-        RetrofitManager.getAllBoardData().safeSubscribe(new Observer<MainActivityBean>() {
+        RetrofitManager.getAllBoardData().retry(3L).safeSubscribe(new Observer<MainActivityBean>() {
             @Override
             public void onSubscribe(Disposable d) {
 

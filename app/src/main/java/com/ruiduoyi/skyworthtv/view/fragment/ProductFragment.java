@@ -25,8 +25,10 @@ import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IValueFormatter;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.ruiduoyi.skyworthtv.R;
+import com.ruiduoyi.skyworthtv.contact.ProductFragmentContact;
 import com.ruiduoyi.skyworthtv.model.bean.ProductFragmentBarChartBean;
 import com.ruiduoyi.skyworthtv.model.bean.ProductFragmentBean;
+import com.ruiduoyi.skyworthtv.presentor.ProductFragmentPresentor;
 import com.ruiduoyi.skyworthtv.view.activity.BaseFragment;
 import com.ruiduoyi.skyworthtv.view.adapter.ProductFragmentAdapter;
 
@@ -42,7 +44,7 @@ import butterknife.Unbinder;
 /**
  *控制器生产看板
  */
-public class ProductFragment extends BaseFragment {
+public class ProductFragment extends BaseFragment implements ProductFragmentContact.View {
     private static final String TAG = ProductFragment.class.getSimpleName();
     View mRootView;
     @BindView(R.id.rv_recycler_productFragment)
@@ -64,7 +66,7 @@ public class ProductFragment extends BaseFragment {
     TextView tvZhj;
     @BindView(R.id.tv_title_productFragment)
     TextView tvTitle;
-
+    private ProductFragmentPresentor presentor;
     public ProductFragment() {
         // Required empty public constructor
     }
@@ -92,36 +94,26 @@ public class ProductFragment extends BaseFragment {
         // Inflate the layout for this fragment
         mRootView = inflater.inflate(R.layout.fragment_product, container, false);
         unbinder = ButterKnife.bind(this, mRootView);
-        init();
-        initBarChart();
+        presentor = new ProductFragmentPresentor(getContext(),this);
+        tvTitle.setText("控制器车间生产看板");
+        //init();
+        //initBarChart();
         return mRootView;
     }
 
-    private void initBarChart() {
+    @Override
+    protected void load() {
+        super.load();
+        presentor.loadData(devId,funcId);
+    }
+
+    private void initBarChart(final List<ProductFragmentBean.UcDataBean.Table2Bean> table2) {
         //
         bcBarChart.setDrawGridBackground(false);//取消网格线
         bcBarChart.getAxisRight().setEnabled(false);//取消右边Y轴
         bcBarChart.getDescription().setEnabled(false);//取消描述
-        final List<ProductFragmentBarChartBean> data = new ArrayList<>();
 
-        for (int i=1; i<=5; i++){
-            ProductFragmentBarChartBean bean = new ProductFragmentBarChartBean();
-            bean.setXb("MIA"+i);
-            int a = new Random().nextInt(200)+200;
-            bean.setScxl(a);
-            bean.setRjscxl(a/5);
-            bean.setDcl(new Random().nextFloat()*100);
-            data.add(bean);
-        }
-        //Y轴(左边)
-        YAxis axisLeft = bcBarChart.getAxisLeft();
-        //axisLeft.setEnabled(false);
-        axisLeft.setDrawGridLines(false);
-        axisLeft.setDrawAxisLine(false);
-        axisLeft.setDrawLabels(false);
-        axisLeft.setAxisMaximum(0);
-        axisLeft.setStartAtZero(true);
-        axisLeft.setAxisMaximum(500);
+
         //图例
         Legend l = bcBarChart.getLegend();
         l.setTextSize(16);
@@ -133,16 +125,43 @@ public class ProductFragment extends BaseFragment {
         l.setTextSize(15);
         l.setDrawInside(false);
         l.setTextColor(Color.WHITE);
+
+
         //数据（3种数据）
         ArrayList<BarEntry> yVals1 = new ArrayList<>();
         ArrayList<BarEntry> yVals2 = new ArrayList<>();
         ArrayList<BarEntry> yVals3 = new ArrayList<>();
-        for (int i = 0; i < data.size(); i++) {
-            yVals1.add(new BarEntry(i,data.get(i).getRjscxl()));
-            yVals2.add(new BarEntry(i,data.get(i).getScxl()));
-            yVals3.add(new BarEntry(i, data.get(i).getDcl()));
+        float max = 0f;
+        for (int i=0; i<table2.size(); i++){
+            ProductFragmentBean.UcDataBean.Table2Bean table2Bean = table2.get(i);
+            //人均效率
+            double yjscxlv = table2Bean.getPqd_yjscxlv();
+            if (yjscxlv > max){
+                max = (float) yjscxlv;
+            }
+            yVals1.add(new BarEntry(i, (float) yjscxlv));
+            //生产效率
+            int scxlv = table2Bean.getPqd_scxlv();
+            if (scxlv > max){
+                max = (float) scxlv;
+            }
+            yVals2.add(new BarEntry(i, scxlv));
+            //达成率
+            double jhdclv = table2Bean.getPqd_jhdclv();
+            if (jhdclv >max){
+                max = (float) jhdclv;
+            }
+            yVals3.add(new BarEntry(i, (float) jhdclv));
         }
-
+        //Y轴(左边)
+        YAxis axisLeft = bcBarChart.getAxisLeft();
+        //axisLeft.setEnabled(false);
+        axisLeft.setDrawGridLines(false);
+        axisLeft.setDrawAxisLine(false);
+        axisLeft.setDrawLabels(false);
+        axisLeft.setAxisMaximum(0);
+        axisLeft.setStartAtZero(true);
+        axisLeft.setAxisMaximum(max);
         BarDataSet set1, set2, set3;
         //如果未设置过数据
         if (bcBarChart.getData() != null && bcBarChart.getData().getDataSetCount() > 0) {
@@ -203,17 +222,17 @@ public class ProductFragment extends BaseFragment {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
                 int index = (int) value;
-                Log.d(TAG, "getFormattedValue: "+value);
-                if (value < 0 || value >= data.size()){
+                //Log.d(TAG, "getFormattedValue: "+value);
+                if (value < 0 || value >= table2.size()){
                     return "";
                 }
-                return data.get(index).getXb();
+                return table2.get(index).getPqd_xbdm();
             }
         });
         // restrict the x-axis range
         xAxis.setAxisMinimum(0);
-        xAxis.setAxisMaximum(data.size());
-        xAxis.setLabelCount(data.size()+1,true);
+        xAxis.setAxisMaximum(table2.size());
+        xAxis.setLabelCount(table2.size()+1,true);
 
         // barData.getGroupWith(...) is a helper that calculates the width each group needs based on the provided parameters
         //bcBarChart.getXAxis().setAxisMaximum(startYear + bcBarChart.getBarData().getGroupWidth(groupSpace, barSpace) * groupCount);
@@ -222,26 +241,10 @@ public class ProductFragment extends BaseFragment {
     }
 
 
-    private void init() {
-        tvTitle.setText("控制器车间生产看板");
-        List<ProductFragmentBean> data = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            ProductFragmentBean bean = new ProductFragmentBean();
-            bean.setA1("MIA");
-            bean.setA2("700000520113" + i);
-            bean.setA3("K50102054" + i);
-            bean.setA4("主板 N623A3-C" + i);
-            bean.setA5("1200");
-            int c = (int) (Math.random() * 1200);
-            bean.setA6("" + (1200 - c));
-            bean.setA7("");
-            bean.setA8("" + c);
+    private void initList(List<ProductFragmentBean.UcDataBean.TableBean> table) {
 
-            bean.setA9((int) ((((float) c * 1.0f) / 1200.0f) * 100)+"%");
-            data.add(bean);
-        }
         rvRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        rvRecycler.setAdapter(new ProductFragmentAdapter(getContext(), data));
+        rvRecycler.setAdapter(new ProductFragmentAdapter(getContext(), table));
 
     }
 
@@ -249,5 +252,39 @@ public class ProductFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @Override
+    public void onLoadDataSucceed(ProductFragmentBean bean) {
+        initList(bean.getUcData().getTable());
+        initErrorCount(bean.getUcData().getTable1());
+        initBarChart(bean.getUcData().getTable2());
+    }
+
+    private void initErrorCount(List<ProductFragmentBean.UcDataBean.Table1Bean> table1) {
+        if (table1 != null && table1.size() >0){
+            for (ProductFragmentBean.UcDataBean.Table1Bean table1Bean:table1){
+                switch (table1Bean.getErr_gzmc()){
+                    case "AOI工站":
+                        tvAoi.setText(""+table1Bean.getErr_gzsl());
+                        break;
+                    case "DCT工站":
+                        tvDct.setText(""+table1Bean.getErr_gzsl());
+                        break;
+                    case "FCT工站":
+                        tvFct.setText(""+table1Bean.getErr_gzsl());
+                        break;
+                    case "ICT工站":
+                        tvIct.setText(""+table1Bean.getErr_gzsl());
+                        break;
+                    case "MI外观检":
+                        tvMi.setText(""+table1Bean.getErr_gzsl());
+                        break;
+                    case "自互检":
+                        tvZhj.setText(""+table1Bean.getErr_gzsl());
+                        break;
+                }
+            }
+        }
     }
 }

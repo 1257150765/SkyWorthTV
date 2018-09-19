@@ -3,17 +3,20 @@ package com.ruiduoyi.skyworthtv.model.net;
 
 import android.util.Log;
 
+import com.ruiduoyi.skyworthtv.model.bean.KPIFragmentBean;
 import com.ruiduoyi.skyworthtv.model.bean.MainActivityBean;
 import com.ruiduoyi.skyworthtv.model.bean.BLMXFragmentBean;
 import com.ruiduoyi.skyworthtv.model.bean.BaseBean;
 import com.ruiduoyi.skyworthtv.model.bean.LineFragmentBean;
 import com.ruiduoyi.skyworthtv.model.bean.PDFFragmentBean;
+import com.ruiduoyi.skyworthtv.model.bean.ProductFragmentBean;
 import com.ruiduoyi.skyworthtv.model.bean.StaffInfo;
 import com.ruiduoyi.skyworthtv.util.Config;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -145,12 +148,23 @@ public class RetrofitManager {
                 .getBlmxData(Config.PRGID_BLMX,Config.KEY_SERID,key_DevId,funcId)
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
+    public static Observable<KPIFragmentBean> getKpiData(String key_DevId, String funcId){
+        return retrofit.create(Api.class)
+                .getKpiData(Config.PRGID_BLMX,Config.KEY_SERID,key_DevId,funcId)
+                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+    }
+    public static Observable<ProductFragmentBean> getProductData(String key_DevId, String funcId){
+        return retrofit.create(Api.class)
+                .getProductData(Config.PRGID_BLMX,Config.KEY_SERID,key_DevId,funcId)
+                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+    }
 
     public static Observable<MainActivityBean> getAllBoardData(){
         return retrofit.create(Api.class)
                 .getAllBoardData(Config.PRGID,Config.KEY_SERID,Config.TYPE_FUNC_NAME_ALL)
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
+
 
 
 
@@ -187,6 +201,12 @@ public class RetrofitManager {
 
         @GET("SmtPDADataDeal")
         Observable<BLMXFragmentBean> getBlmxData(@Query("key_prgid") String key_prgid, @Query("key_srvid") String key_srvid, @Query("Key_DevId") String Key_DevId, @Query("key_FuncId")String key_FuncId);
+
+        @GET("SmtPDADataDeal")
+        Observable<KPIFragmentBean> getKpiData(@Query("key_prgid") String key_prgid, @Query("key_srvid") String key_srvid, @Query("Key_DevId") String Key_DevId, @Query("key_FuncId")String key_FuncId);
+
+        @GET("SmtPDADataDeal")
+        Observable<ProductFragmentBean> getProductData(@Query("key_prgid") String key_prgid, @Query("key_srvid") String key_srvid, @Query("Key_DevId") String Key_DevId, @Query("key_FuncId")String key_FuncId);
 
         @GET("SmtPDADataDeal")
         Observable<MainActivityBean> getAllBoardData(@Query("key_prgid") String key_prgid, @Query("key_srvid") String key_srvid, @Query("key_FuncId") String key_FuncId);

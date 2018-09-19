@@ -88,6 +88,12 @@ public class BaseFragment extends Fragment {
             listener = (FragmentShowSucceedListener) activity;
         }
     }
+
+    // TODO: 2018-09-19 bug
+    //如果仅有一个看板，切换看板时会隐藏自己，再显示自己，这样会导致请求两次数据
+    //多个看板切换时，第二次切换开始，有闪烁情况
+    // （目测是请求数据刷新界面-》隐藏—》切换看板->显示之前的数据页面-》刷新数据页面）
+    //因为切换时间较长，影响较小，暂时不处理
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);

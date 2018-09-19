@@ -18,15 +18,16 @@ import android.widget.TextView;
 
 import com.ruiduoyi.skyworthtv.R;
 
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+
 public class OverlayWindowService extends Service {
     private static final String TAG = OverlayWindowService.class.getSimpleName();
-
+    protected ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(2);
     public OverlayWindowService() {
     }
 
     @Override
     public IBinder onBind(Intent intent) {
-        // TODO: Return the communication channel to the service.
         throw new UnsupportedOperationException("Not yet implemented");
     }
     @Override
@@ -38,11 +39,11 @@ public class OverlayWindowService extends Service {
     private void showFloatingWindow() {
         Log.d(TAG, "showFloatingWindow: ");
         // 获取WindowManager服务
-        WindowManager windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
+        final WindowManager windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
 
         // 新建悬浮窗控件
-        TextView textView = new TextView(getApplicationContext());
-        textView.setText("欢迎领导莅临检查指导工作");
+        final TextView textView = new TextView(getApplicationContext());
+        textView.setText("欢迎领导莅临检查指导工作欢迎领导莅临检查指导工作欢迎领导莅临检查指导工作");
         textView.setTextColor(Color.RED);
         textView.setBackgroundColor(Color.parseColor("#88cccccc"));
         textView.setMarqueeRepeatLimit(-1);
@@ -65,10 +66,16 @@ public class OverlayWindowService extends Service {
         layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
         layoutParams.gravity  = Gravity.CENTER_HORIZONTAL|Gravity.BOTTOM;
         //设置无焦点，否则遥控器无法使用
-        layoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+        layoutParams.flags = WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM;
         layoutParams.x = 0;
         layoutParams.y = 0;
         // 将悬浮窗控件添加到WindowManager
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                windowManager.removeView(v);
+            }
+        });
         windowManager.addView(textView, layoutParams);
     }
 

@@ -33,6 +33,7 @@ import com.ruiduoyi.skyworthtv.contact.MainActivityContact;
 import com.ruiduoyi.skyworthtv.model.cache.PreferencesUtil;
 import com.ruiduoyi.skyworthtv.presentor.MainActivityPresentor;
 import com.ruiduoyi.skyworthtv.util.Constant;
+import com.ruiduoyi.skyworthtv.util.OverlayWindowService;
 import com.ruiduoyi.skyworthtv.view.adapter.MainActivityAdapter;
 
 import java.util.ArrayList;
@@ -55,21 +56,27 @@ public class MainActivity extends BaseActivity implements MainActivityContact.Vi
     private MainActivityPresentor presentor;
     private boolean isLauncher = false;
     private PreferencesUtil preferencesUtil;
+    private boolean isFirstIn = true;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         init();
-        initOverlayWindow();
         presentor = new MainActivityPresentor(this, this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        presentor.loadData();
     }
 
     /**
      * 初始化悬浮窗（显示横幅）
      */
     private void initOverlayWindow() {
-        //startService(new Intent(MainActivity.this, OverlayWindowService.class));
+        startService(new Intent(MainActivity.this, OverlayWindowService.class));
     }
 
     @Override
@@ -159,25 +166,26 @@ public class MainActivity extends BaseActivity implements MainActivityContact.Vi
         rvRecycler.setAdapter(adapter);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2, LinearLayoutManager.HORIZONTAL, false);
         rvRecycler.setLayoutManager(gridLayoutManager);
-        String devId = preferencesUtil.getString(Constant.CACHE_DATA_NAME_DEVID);
-        if (isLauncher && !"".equals(devId)){
-            /*data = data.replaceAll("&quot;","\"");
-            Gson gson = new Gson();
-            Temp temp = gson.fromJson(data, Temp.class);*/
-            ArrayList<MainActivityBean.UcDataBean.TableBean> list = new ArrayList<>();
-            for (MainActivityBean.UcDataBean.TableBean tableBean : bean.getUcData().getTable()){
-                if (devId.equals(tableBean.getBrd_devid())){
-                    list.add(tableBean);
+        //第一次进入则会自动转入上次设置的启动页面
+        if (isFirstIn){
+            String devId = preferencesUtil.getString(Constant.CACHE_DATA_NAME_DEVID);
+            if (isLauncher && !"".equals(devId)){
+                ArrayList<MainActivityBean.UcDataBean.TableBean> list = new ArrayList<>();
+                for (MainActivityBean.UcDataBean.TableBean tableBean : bean.getUcData().getTable()){
+                    if (devId.equals(tableBean.getBrd_devid())){
+                        list.add(tableBean);
+                    }
+
                 }
-
+                if (list.size() >0){
+                    Intent intent = new Intent(this, ControlWorkShopStateBoardActivity.class);
+                    intent.putExtra(ControlWorkShopStateBoardActivity.DATA,list);
+                    //intent.putExtra(ControlWorkShopStateBoardActivity.START_TYPE, ControlWorkShopStateBoardActivity.START_TYPE_PRODUCTFRAGMENT);
+                    startActivity(intent);
+                }
+                isFirstIn = false;
+                initOverlayWindow();
             }
-            if (list.size() >0){
-                Intent intent = new Intent(this, ControlWorkShopStateBoardActivity.class);
-                intent.putExtra(ControlWorkShopStateBoardActivity.DATA,list);
-                //intent.putExtra(ControlWorkShopStateBoardActivity.START_TYPE, ControlWorkShopStateBoardActivity.START_TYPE_PRODUCTFRAGMENT);
-                startActivity(intent);
-            }
-
         }
     }
 
@@ -185,7 +193,6 @@ public class MainActivity extends BaseActivity implements MainActivityContact.Vi
     @Override
     public void onItemClick(String  devId) {
         if (isLauncher){
-
             preferencesUtil.setString(Constant.CACHE_DATA_NAME_DEVID,devId);
         }
     }

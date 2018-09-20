@@ -26,7 +26,6 @@
             android:id="@+id/tv_text_mainActivity_item"
             android:textAlignment="center"
             android:textSize="33sp"
-            android:text="车间1"
             android:layout_width="@dimen/x375"
             android:layout_height="match_parent" />
     </LinearLayout>

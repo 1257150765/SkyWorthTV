@@ -169,37 +169,31 @@
                         android:layout_height="match_parent">
                         <TextView
                             android:id="@+id/tv_aoi_productFragment"
-                            android:text="3"
                             style="@style/TextViewStyle3"
                             android:layout_weight="1"
                             />
                         <TextView
                             android:id="@+id/tv_ict_productFragment"
-                            android:text="4"
                             style="@style/TextViewStyle3"
                             android:layout_weight="1"
                             />
                         <TextView
                             android:id="@+id/tv_fct_productFragment"
-                            android:text="5"
                             style="@style/TextViewStyle3"
                             android:layout_weight="1"
                             />
                         <TextView
                             android:id="@+id/tv_mi_productFragment"
-                            android:text="6"
                             style="@style/TextViewStyle3"
                             android:layout_weight="1"
                             />
                         <TextView
                             android:id="@+id/tv_dct_productFragment"
-                            android:text="7"
                             style="@style/TextViewStyle3"
                             android:layout_weight="1"
                             />
                         <TextView
                             android:id="@+id/tv_zhj_productFragment"
-                            android:text="8"
                             style="@style/TextViewStyle3"
                             android:layout_weight="1"
                             />

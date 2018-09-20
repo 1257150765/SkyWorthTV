@@ -108,7 +108,7 @@ public class KPIFragment extends BaseFragment implements KPIFragmentContact.View
         bcRightTop.setDrawGridBackground(false);
         bcRightTop.getAxisRight().setEnabled(false);
         bcRightTop.getDescription().setEnabled(false);
-        int max = 0;
+        int max = 2;
         final Map<String,ArrayList<KPIFragmentBean.UcDataBean.Table1Bean>> mapData = new HashMap<>();
         for (KPIFragmentBean.UcDataBean.Table1Bean table1Bean : table1){
             if (table1Bean.getScl_blsl() > max){
@@ -130,7 +130,7 @@ public class KPIFragment extends BaseFragment implements KPIFragmentContact.View
         axisLeft.setTextColor(Color.WHITE);
         axisLeft.setStartAtZero(true);
         axisLeft.setAxisMaximum(0);
-        axisLeft.setAxisMaximum((float) max);
+        axisLeft.setAxisMaximum((float) max + max/10);
         Legend l = bcRightTop.getLegend();
         l.setTextSize(16);
         l.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
@@ -216,7 +216,7 @@ public class KPIFragment extends BaseFragment implements KPIFragmentContact.View
         bcLeftTop.setDrawGridBackground(false);
         bcLeftTop.getAxisRight().setEnabled(false);
         bcLeftTop.getDescription().setEnabled(false);
-        double max = 0;
+        double max = 2;
         final Map<String,ArrayList<KPIFragmentBean.UcDataBean.TableBean>> mapData = new HashMap<>();
         for (KPIFragmentBean.UcDataBean.TableBean tableBean : table){
             if (tableBean.getScl_jhdclv() > max){
@@ -238,7 +238,7 @@ public class KPIFragment extends BaseFragment implements KPIFragmentContact.View
         axisLeft.setTextColor(Color.WHITE);
         axisLeft.setStartAtZero(true);
         axisLeft.setAxisMaximum(0);
-        axisLeft.setAxisMaximum((float) max);
+        axisLeft.setAxisMaximum((float) ((float) max  + max/10));
         Legend l = bcLeftTop.getLegend();
         l.setTextSize(16);
         l.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
@@ -358,7 +358,7 @@ public class KPIFragment extends BaseFragment implements KPIFragmentContact.View
 
     private void initRightBottom(List<KPIFragmentBean.UcDataBean.Table3Bean> table3) {
         String timeKey = "";
-        double max = 0;
+        double max = 2;
         final Map<String,ArrayList<KPIFragmentBean.UcDataBean.Table3Bean>> mapData = new HashMap<>();
         for (KPIFragmentBean.UcDataBean.Table3Bean table3Bean : table3){
             if (table3Bean.getScl_scxlv() > max){
@@ -437,7 +437,7 @@ public class KPIFragment extends BaseFragment implements KPIFragmentContact.View
         yAxis.setTextColor(Color.WHITE);
         yAxis.setLabelCount(3);
         yAxis.setAxisMinimum(0);
-        yAxis.setAxisMaximum((float) max);
+        yAxis.setAxisMaximum((float) ((float) max  + max/10));
         lcRightBottom.setData(lineData);
         lcRightBottom.getLegend().setEnabled(true);
         lcRightBottom.getDescription().setEnabled(false);
@@ -451,7 +451,7 @@ public class KPIFragment extends BaseFragment implements KPIFragmentContact.View
         hbcLeftBottom.getAxisRight().setEnabled(false);
         hbcLeftBottom.getDescription().setEnabled(false);
         final Map<String,ArrayList<KPIFragmentBean.UcDataBean.Table2Bean>> mapData = new HashMap<>();
-        double max = 0;
+        double max = 2;
         for (KPIFragmentBean.UcDataBean.Table2Bean table2Bean : table2){
             if (table2Bean.getScl_scxlv() > max){
                 max = table2Bean.getScl_scxlv();
@@ -471,7 +471,7 @@ public class KPIFragment extends BaseFragment implements KPIFragmentContact.View
         axisLeft.setTextColor(Color.WHITE);
         axisLeft.setStartAtZero(true);
         axisLeft.setAxisMaximum(0);
-        axisLeft.setAxisMaximum((float) max);
+        axisLeft.setAxisMaximum((float) ((float) max  + max/10));
         Legend l = hbcLeftBottom.getLegend();
         l.setTextSize(16);
         l.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);

@@ -683,6 +683,9 @@ public class LineFragment extends BaseFragment implements LineFramentContact.Vie
         }
         LineFragmentBean.UcDataBean.TableBean managerBean = table.get(0);
         String baseImgUrl = managerBean.getXbm_photopath();
+        if(!"".equals(managerBean.getXbm_xbdm())){
+            tvLineName.setText("线别:"+managerBean.getXbm_xbdm());
+        }
         //特殊情况 会导致Glide加载图片出错，（Glide需要Fragmenton Attach回调后才可能load）
         if (isAdded()) {
             Glide.with(getContext()).load(baseImgUrl + "/" + managerBean.getXbm_scgz() + ".jpg").error(R.mipmap.defult_head_photo).into(ivHeadPhoto1);

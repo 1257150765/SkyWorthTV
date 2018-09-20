@@ -56,8 +56,8 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
         for (MainActivityBean.UcDataBean.TableBean tableBean : mData){
             if (mapData.containsKey(tableBean.getBrd_devid())){
                 mapData.get(tableBean.getBrd_devid()).add(tableBean);
-                titleData.add(tableBean.getBrd_devms());
-                devIdData.add(tableBean.getBrd_devid());
+                //titleData.add(tableBean.getBrd_devms());
+                //devIdData.add(tableBean.getBrd_devid());
             }else {
                 ArrayList<MainActivityBean.UcDataBean.TableBean> list = new ArrayList<>();
                 list.add(tableBean);

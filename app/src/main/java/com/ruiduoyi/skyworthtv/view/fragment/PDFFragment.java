@@ -92,7 +92,7 @@ public class PDFFragment extends BaseFragment implements PDFFragmentContact.View
         super.load();
         try {
             //如果已经展示完了，并且还有下一个文件，那么加载新的文件
-            if (data == null){
+            if (data == null || data.getUcData().getTable().size() == 0){
                 return;
             }
             if (isEnd && currFileIndex < data.getUcData().getTable().size()){

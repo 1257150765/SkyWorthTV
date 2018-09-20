@@ -103,6 +103,7 @@ public class ControlWorkShopStateBoardActivity extends AppCompatActivity impleme
                 .commit();
 
         nextFragmentIndex ++;
+
     }
 
 

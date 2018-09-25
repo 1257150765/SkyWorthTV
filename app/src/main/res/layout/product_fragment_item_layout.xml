@@ -19,7 +19,7 @@
         <TextView
             android:id="@+id/tv_wlbh_productFragment"
             android:text="物料编号"
-            android:layout_weight="4"
+            android:layout_weight="3"
             style="@style/ControlTextViewStyle" />
         <TextView
             android:id="@+id/tv_cpmc_productFragment"
@@ -29,6 +29,11 @@
         <TextView
             android:id="@+id/tv_dds_productFragment"
             android:text="订单数"
+            android:layout_weight="2"
+            style="@style/ControlTextViewStyle" />
+        <TextView
+            android:id="@+id/tv_jrdds_productFragment"
+            android:text="今日计划数量"
             android:layout_weight="2"
             style="@style/ControlTextViewStyle" />
         <TextView

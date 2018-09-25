@@ -98,13 +98,7 @@ public class MainActivity extends BaseActivity implements MainActivityContact.Vi
         downloadProgressDialog.setCanceledOnTouchOutside(false);
         downloadProgressDialog.setTitle("下载中");
         downloadProgressDialog.setMax(100);
-        /*Display display = getWindowManager().getDefaultDisplay(); //Activity#getWindowManager()
-        Point size = new Point();
-        display.getSize(size);
-        int width = size.x;
-        int height = size.y;
-        Log.d(TAG, "init: 屏幕宽度"+width);
-        Log.d(TAG, "init: 屏幕高度"+height);*/
+
 
     }
 
@@ -162,7 +156,7 @@ public class MainActivity extends BaseActivity implements MainActivityContact.Vi
         rvRecycler.setAdapter(adapter);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2, LinearLayoutManager.HORIZONTAL, false);
         rvRecycler.setLayoutManager(gridLayoutManager);
-        //第一次进入则会自动转入上次设置的启动页面
+        //第一次进入则会自动转入上次设置的启动页面（MainActivity每显示一次，会重新刷新数据）
         if (isFirstIn){
             String devId = preferencesUtil.getString(Constant.CACHE_DATA_NAME_DEVID);
             if (isLauncher && !"".equals(devId)){
@@ -171,7 +165,6 @@ public class MainActivity extends BaseActivity implements MainActivityContact.Vi
                     if (devId.equals(tableBean.getBrd_devid())){
                         list.add(tableBean);
                     }
-
                 }
                 if (list.size() >0){
                     Intent intent = new Intent(this, ControlWorkShopStateBoardActivity.class);
@@ -186,9 +179,6 @@ public class MainActivity extends BaseActivity implements MainActivityContact.Vi
             }
         }
     }
-
-
-
 
     @Override
     public void onItemClick(String  devId) {

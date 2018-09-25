@@ -46,10 +46,11 @@ public class ProductFragmentAdapter extends RecyclerView.Adapter<ProductFragment
         holder.tvScddh.setText(bean.getPqd_djbh());
         holder.tvWlbh.setText(bean.getPlm_wldm());
         holder.tvCpmc.setText(bean.getItm_pmgg());
-        holder.tvDds.setText(""+bean.getPlm_jhsl());
-        holder.tvSjwcsl.setText(""+bean.getRkd_day_rksl_v());
-        holder.tvBlps.setText(""+bean.getErr_day_gzsl_v());
-        holder.tvBll.setText(""+(((float)bean.getErr_day_gzsl_v())/bean.getRkd_day_rksl_v()*100)+"%");
+        holder.tvDds.setText("" + bean.getPlm_jhsl());
+        holder.tvJrdds.setText("" + bean.getPqd_jhscsl());
+        holder.tvSjwcsl.setText("" + bean.getRkd_day_rksl_v());
+        holder.tvBlps.setText("" + bean.getErr_day_gzsl_v());
+        holder.tvBll.setText("" + (((float) bean.getErr_day_gzsl_v()) / bean.getPqd_jhscsl() * 1000000) + "");
     }
 
 
@@ -76,6 +77,8 @@ public class ProductFragmentAdapter extends RecyclerView.Adapter<ProductFragment
         TextView tvBlps;
         @BindView(R.id.tv_bll_productFragment)
         TextView tvBll;
+        @BindView(R.id.tv_jrdds_productFragment)
+        TextView tvJrdds;
         public ProductFragmentHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

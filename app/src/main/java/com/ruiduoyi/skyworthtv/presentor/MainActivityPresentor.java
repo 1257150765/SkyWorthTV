@@ -73,7 +73,7 @@ public class MainActivityPresentor implements MainActivityContact.Presentor {
 
     @Override
     public void loadData() {
-        RetrofitManager.getAllBoardData().retry(3L).safeSubscribe(new Observer<MainActivityBean>() {
+        RetrofitManager.getAllBoardData().retry(10L).safeSubscribe(new Observer<MainActivityBean>() {
             @Override
             public void onSubscribe(Disposable d) {
 

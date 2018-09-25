@@ -74,8 +74,6 @@ public class PDFFragment extends BaseFragment implements PDFFragmentContact.View
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-
         mRootView = inflater.inflate(R.layout.fragment_pdf, container, false);
         unbinder = ButterKnife.bind(this, mRootView);
         //initPdfData();
@@ -146,6 +144,9 @@ public class PDFFragment extends BaseFragment implements PDFFragmentContact.View
 
     private void initPdfData(final byte[] file) {
 
+        if (pdfView !=null){
+            pdfView.recycle();
+        }
         pdfView.fromBytes(file)
                 .onPageChange(new OnPageChangeListener() {
                     @Override
@@ -187,6 +188,14 @@ public class PDFFragment extends BaseFragment implements PDFFragmentContact.View
     public void onLoadDataSucceed(final PDFFragmentBean bean) {
         if (bean.isUtStatus()){
              data = bean;
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (pdfView !=null){
+            pdfView.recycle();
         }
     }
 }

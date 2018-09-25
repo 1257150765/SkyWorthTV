@@ -165,7 +165,7 @@
                             android:layout_marginTop="@dimen/y20"
                             android:background="@drawable/line_fragment_bord_background3"
                             android:gravity="center_vertical"
-                            android:text="今日产量"
+                            android:text="计划数量\n0\n今日产量\n0"
                             android:textAlignment="center"
                             android:textColor="@color/black"
                             android:textSize="@dimen/y30"
@@ -291,6 +291,9 @@
                     <TextView
                         style="@style/LineFragmentTextViewStyle3"
                         android:text="订单数量" />
+                    <TextView
+                        style="@style/LineFragmentTextViewStyle3"
+                        android:text="投入数量" />
 
                     <TextView
                         style="@style/LineFragmentTextViewStyle3"
@@ -298,11 +301,7 @@
 
                     <TextView
                         style="@style/LineFragmentTextViewStyle3"
-                        android:text="目标人数" />
-
-                    <TextView
-                        style="@style/LineFragmentTextViewStyle3"
-                        android:text="目标产能" />
+                        android:text="WIP" />
 
                     <TextView
                         style="@style/LineFragmentTextViewStyle3"
@@ -345,19 +344,18 @@
                          />
 
                     <TextView
+                        android:id="@+id/tv_trsl_lineFragment"
+                        style="@style/LineFragmentTextViewStyle4"
+                        />
+                    <TextView
                         android:id="@+id/tv_rksl_lineFragment"
                         style="@style/LineFragmentTextViewStyle4"
                          />
 
                     <TextView
-                        android:id="@+id/tv_bzrs_lineFragment"
+                        android:id="@+id/tv_wip_lineFragment"
                         style="@style/LineFragmentTextViewStyle4"
                          />
-
-                    <TextView
-                        android:id="@+id/tv_xscn_lineFragment"
-                        style="@style/LineFragmentTextViewStyle4"
-                        />
 
                     <TextView
                         android:id="@+id/tv_sjry_lineFragment"

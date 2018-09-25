@@ -355,12 +355,22 @@ public class LineFragmentBean {
             private String plm_wldm;
             private String itm_pmgg;
             private int plm_jhsl;
-            private double rkd_rksl_v;
+            private int rkd_rksl_v;
             private int xbm_bzrs;
             private int plm_xscn;
             private int xbm_sjry;
             private int err_gzsl_v;
             private String xbm_xbdm;
+            private int rkd_trsl_v;
+
+
+            public int getRkd_trsl_v() {
+                return rkd_trsl_v;
+            }
+
+            public void setRkd_trsl_v(int rkd_trsl_v) {
+                this.rkd_trsl_v = rkd_trsl_v;
+            }
 
             public String getPlm_djbh() {
                 return plm_djbh;
@@ -394,11 +404,11 @@ public class LineFragmentBean {
                 this.plm_jhsl = plm_jhsl;
             }
 
-            public double getRkd_rksl_v() {
+            public int getRkd_rksl_v() {
                 return rkd_rksl_v;
             }
 
-            public void setRkd_rksl_v(double rkd_rksl_v) {
+            public void setRkd_rksl_v(int rkd_rksl_v) {
                 this.rkd_rksl_v = rkd_rksl_v;
             }
 

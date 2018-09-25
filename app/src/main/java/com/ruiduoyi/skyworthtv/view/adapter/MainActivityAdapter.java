@@ -43,8 +43,8 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
         this.listener = listener;
     }
 
-    private List<String> titleData = new ArrayList<>();
-    private List<String> devIdData = new ArrayList<>();
+    private List<String> titleData = new ArrayList<>();//车间（线别）标题，和id一一对应
+    private List<String> devIdData = new ArrayList<>();//车间（线别）ID，和标题--对应
     private Map<String,ArrayList<MainActivityBean.UcDataBean.TableBean>> mapData = new HashMap<>();
     public MainActivityAdapter(Context mContext, List<MainActivityBean.UcDataBean.TableBean> mData) {
         this.mData = mData;
@@ -52,8 +52,12 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
         parseData();
     }
 
+    /**
+     * 解析数据
+     */
     private void parseData() {
         for (MainActivityBean.UcDataBean.TableBean tableBean : mData){
+            //如果
             if (mapData.containsKey(tableBean.getBrd_devid())){
                 mapData.get(tableBean.getBrd_devid()).add(tableBean);
                 //titleData.add(tableBean.getBrd_devms());

@@ -32,18 +32,16 @@ import butterknife.ButterKnife;
  *
  */
 public class ControlWorkShopStateBoardActivity extends AppCompatActivity implements BaseFragment.FragmentShowSucceedListener {
-    public static final String TYPE_BLMXFRAGMENT = "KB05";
-    public static final String TYPE_PRODUCTFRAGMENT = "KB06";
-    public static final String TYPE_PDFFRAGMENT = "KB02";
-    public static final String TYPE_LINEFRAGMENT = "KB03";
-    public static final String TYPE_KPIFRAGMENT = "KB04";
-    public static final String TYPE_STAFFCHARTFRAGMENT = "KB01";
-    public static final String TYPE = "startType";
+    public static final String TYPE_BLMXFRAGMENT = "KB05";//不良明细
+    public static final String TYPE_PRODUCTFRAGMENT = "KB06";//控制器车间
+    public static final String TYPE_PDFFRAGMENT = "KB02";//pDF展示
+    public static final String TYPE_LINEFRAGMENT = "KB03";//拉线看板
+    public static final String TYPE_KPIFRAGMENT = "KB04";//KPI看板
+    public static final String TYPE_STAFFCHARTFRAGMENT = "KB01";//员工评价
     public static final String DATA = "data";
     @BindView(R.id.ll_fragmentContainer_controlStateBoardBoard)
     LinearLayout llFragmentContainer;
 
-    private String startType = "";
     private ArrayList<MainActivityBean.UcDataBean.TableBean> mBoardData;
     private List<Fragment> listAllFragment = new ArrayList<>();
     private int nextFragmentIndex = 0;
@@ -76,10 +74,12 @@ public class ControlWorkShopStateBoardActivity extends AppCompatActivity impleme
                     break;
             }
             listAllFragment.add(baseFragment);
+            //把Fragment加入到容器
             addFragment(baseFragment);
         }
         showFragment();//显示第一个Fragment
     }
+
 
     private void addFragment(Fragment target) {
         getSupportFragmentManager()
@@ -87,6 +87,7 @@ public class ControlWorkShopStateBoardActivity extends AppCompatActivity impleme
                 .add(R.id.ll_fragmentContainer_controlStateBoardBoard, target)
                 .commit();
     }
+    //切换显示fragment，
     private void showFragment() {
         if (nextFragmentIndex >= listAllFragment.size()){
             nextFragmentIndex = 0;
@@ -107,6 +108,7 @@ public class ControlWorkShopStateBoardActivity extends AppCompatActivity impleme
     }
 
 
+    //Fragment展示完毕时回调
     @Override
     public void onShowSecceed() {
         showFragment();

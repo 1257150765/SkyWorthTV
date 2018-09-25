@@ -26,11 +26,10 @@ public class BaseFragment extends Fragment {
     protected long changeTime = 600L;//Fragment间，切换的时间
     protected long reflushTime = 30L;//Fragment内数据刷新的时间（PDF是切换页数时间，员工评价同理但每一页都会请求数据）
     protected String devId = "";//设备id，后台会
-    protected boolean isHidden;
-    private long time = 0L;
+    protected String funcId = "";//
+    protected boolean isHidden;//Fragment是否隐藏
+    private long time = 0L;//用作计时
     protected ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(2);
-    protected String funcId = "";
-    private boolean isRun = false;
     private long initalDalayTime = 1L;//延时1秒加载数据
 
     public static BaseFragment newInstance(String devId,String funcId,String changeTime, String reflushTime) {
@@ -56,19 +55,6 @@ public class BaseFragment extends Fragment {
             //changeTime = 30L;
             //reflushTime = 10L;
         }
-
-        /*executor.scheduleAtFixedRate(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    if (!isHidden) {
-                        load();
-                    }
-                }catch (Exception e){
-
-                }
-            }
-        },0,reflushTime, TimeUnit.SECONDS);*/
     }
 
     /**

@@ -11,7 +11,7 @@ import com.ruiduoyi.skyworthtv.contact.BaseContact;
 public class BaseActivity extends AppCompatActivity implements BaseContact.View{
     @Override
     public void onLoading(boolean isLoading) {
-        
+
     }
 
     @Override

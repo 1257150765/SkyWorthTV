@@ -84,6 +84,15 @@ public class LineFragment extends BaseFragment implements LineFramentContact.Vie
     TextView tvName3;
     @BindView(R.id.tv_phone3_lineFragment)
     TextView tvPhone3;
+
+    @BindView(R.id.rv_planList_lineFragment)
+    RecyclerView rvPlanList;
+    @BindView(R.id.tv_jrcl_lineFragment)
+    TextView tvJrcl;
+    @BindView(R.id.dbv_complete_lineFragment)
+    DashboardView dbvComplete;
+    @BindView(R.id.tv_lineName_lineFragment)
+    TextView tvLineName;
     @BindView(R.id.tv_ddbh_lineFragment)
     TextView tvDdbh;
     @BindView(R.id.tv_wldm_lineFragment)
@@ -94,24 +103,16 @@ public class LineFragment extends BaseFragment implements LineFramentContact.Vie
     TextView tvPmgg;
     @BindView(R.id.tv_jhsl_lineFragment)
     TextView tvJhsl;
+    @BindView(R.id.tv_trsl_lineFragment)
+    TextView tvTrsl;
     @BindView(R.id.tv_rksl_lineFragment)
     TextView tvRksl;
-    @BindView(R.id.tv_bzrs_lineFragment)
-    TextView tvBzrs;
-    @BindView(R.id.tv_xscn_lineFragment)
-    TextView tvXscn;
+    @BindView(R.id.tv_wip_lineFragment)
+    TextView tvWip;
     @BindView(R.id.tv_sjry_lineFragment)
     TextView tvSjry;
     @BindView(R.id.tv_gzsl_lineFragment)
     TextView tvGzsl;
-    @BindView(R.id.rv_planList_lineFragment)
-    RecyclerView rvPlanList;
-    @BindView(R.id.tv_jrcl_lineFragment)
-    TextView tvJrcl;
-    @BindView(R.id.dbv_complete_lineFragment)
-    DashboardView dbvComplete;
-    @BindView(R.id.tv_lineName_lineFragment)
-    TextView tvLineName;
 
 
     private View mRootView;
@@ -200,7 +201,7 @@ public class LineFragment extends BaseFragment implements LineFramentContact.Vie
         xAxis.setAxisLineColor(Color.WHITE);
         xAxis.setAvoidFirstLastClipping(true);
         xAxis.setLabelRotationAngle(-30f);
-        xAxis.setTextSize(6f);
+        xAxis.setTextSize(7f);
         bcBarChart3.getAxisRight().setEnabled(false);
         YAxis yAxis = bcBarChart3.getAxisLeft();
         yAxis.setDrawGridLines(false);
@@ -471,8 +472,9 @@ public class LineFragment extends BaseFragment implements LineFramentContact.Vie
 
 
     private void initTop(LineFragmentBean.UcDataBean.Table1Bean bean) {
-        tvLineName.setText("线别:"+bean.getPqd_xbdm());
-        tvJrcl.setText("今日产量\n\n" + bean.getRkd_rksl_v());
+        tvLineName.setText("线别:" + bean.getPqd_xbdm());
+        //tvJrcl.setText("今日产量\n\n" + bean.getRkd_rksl_v());
+        tvJrcl.setText("计划数量\n" + bean.getPqd_jhscsl_v() + "\n今日产量\n" + bean.getRkd_rksl_v());
         dbvComplete.setPercent((int) bean.getPqd_dclv());
         dbvComplete.setEndColor(getResources().getColor(R.color.linFragment_blue3));
         dbvComplete.setStartColor(getResources().getColor(R.color.red));
@@ -655,11 +657,15 @@ public class LineFragment extends BaseFragment implements LineFramentContact.Vie
         tvWldm.setText(currPlanBean.getPlm_wldm());
         tvPmgg.setText(currPlanBean.getItm_pmgg());
         tvJhsl.setText("" + currPlanBean.getPlm_jhsl());
-        tvRksl.setText("" + currPlanBean.getRkd_rksl_v());
-        tvBzrs.setText("" + currPlanBean.getXbm_bzrs());
-        tvXscn.setText("" + currPlanBean.getPlm_xscn());
+        tvRksl.setText("" + ((int)currPlanBean.getRkd_rksl_v()));
+        tvTrsl.setText("" + currPlanBean.getRkd_trsl_v());
+        //tvBzrs.setText("" + currPlanBean.getXbm_bzrs());
+        //tvXscn.setText("" + currPlanBean.getPlm_xscn());
+        int wip = currPlanBean.getRkd_trsl_v() - currPlanBean.getRkd_rksl_v();
+        tvWip.setText(wip <=0 ? "0":""+wip);
         tvSjry.setText("" + currPlanBean.getXbm_sjry());
         tvGzsl.setText("" + currPlanBean.getErr_gzsl_v());
+
     }
 
     /**
@@ -683,8 +689,8 @@ public class LineFragment extends BaseFragment implements LineFramentContact.Vie
         }
         LineFragmentBean.UcDataBean.TableBean managerBean = table.get(0);
         String baseImgUrl = managerBean.getXbm_photopath();
-        if(!"".equals(managerBean.getXbm_xbdm())){
-            tvLineName.setText("线别:"+managerBean.getXbm_xbdm());
+        if (!"".equals(managerBean.getXbm_xbdm())) {
+            tvLineName.setText("线别:" + managerBean.getXbm_xbdm());
         }
         //特殊情况 会导致Glide加载图片出错，（Glide需要Fragmenton Attach回调后才可能load）
         if (isAdded()) {
